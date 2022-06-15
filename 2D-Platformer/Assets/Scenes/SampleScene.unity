@@ -349,7 +349,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1100348857
 GameObject:
@@ -544,12 +544,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1357903206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.024860041, y: -1.515, z: 0}
+  m_LocalPosition: {x: 0.024860041, y: -1.5198, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1357903209
 MonoBehaviour:
@@ -563,8 +563,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8092a20930f604b842ee40ca108543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 10
-  gravity: 20
+  walkSpeed: 15
+  gravity: 35
+  jumpSpeed: 15
+  isJumping: 0
 --- !u!114 &1357903210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,6 +579,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e950e0ec889da419afc9fbf95f34bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raycastDist: 0.2
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  below: 0
 --- !u!114 &1357903211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,14 +627,6 @@ MonoBehaviour:
     m_ActionName: Player/Move[/XInputControllerWindows/leftStick,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: abf985b8-687a-4dbd-be9a-7def59d271c9
-    m_ActionName: Player/Look[/XInputControllerWindows/rightStick,/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 51d30f72-e74d-49ac-9124-5080233ea803
-    m_ActionName: Player/Fire[/XInputControllerWindows/rightTrigger,/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 9aca2cf2-d3c2-4659-8fda-5033e60485c1
     m_ActionName: UI/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
@@ -666,6 +665,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 80dcc861-be05-49ba-b520-571dd847979f
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1357903209}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 89435b6d-b67e-4421-89db-c9d15fe45bc4
+    m_ActionName: Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -687,7 +702,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: db2d8f55750e99d46817f0fa26c9d413, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -701,10 +716,10 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1357903206}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: db2d8f55750e99d46817f0fa26c9d413, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0032007457, y: -0.00080016855}
-  m_Size: {x: 0.116791226, y: 0.16160035}
+  m_Offset: {x: 0, y: -0.00007915497}
+  m_Size: {x: 0.11727482, y: 0.16015832}
   m_Direction: 0
