@@ -20,6 +20,8 @@ public class CharacterController2D : MonoBehaviour
     private Vector2[] _raycastPosition = new Vector2[3];
     private RaycastHit2D[] _raycastHits = new RaycastHit2D[3]; //gives us info about the object we hit with ray
 
+    private bool _disableCheckGround;
+
     void Start()
     {
         _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
@@ -37,7 +39,10 @@ public class CharacterController2D : MonoBehaviour
         _currPosition = _lastPosition + _moveAmount;
         _rigidbody2D.MovePosition(_currPosition);
         _moveAmount = Vector2.zero; //move amount did its job so reset the value to zero
-        CheckGround();
+        if(!_disableCheckGround) //if character is jumping, don't check the ground
+        {
+            CheckGround();
+        }
     }
 
     public void Move(Vector2 movement)
@@ -73,6 +78,19 @@ public class CharacterController2D : MonoBehaviour
         {
             below = false;
         }
+    }
+
+    public void DisableCheckGround()
+    {
+        below = false;
+        _disableCheckGround = true;
+        StartCoroutine("EnableCheckGround");
+    }
+
+    IEnumerator EnableCheckGround()
+    {
+        yield return new WaitForSeconds(.1f);
+        _disableCheckGround = false;
     }
 
     /*private void DrawRays2Debug(Vector2 direction,Color color)

@@ -30,11 +30,13 @@ public class PlayerController : MonoBehaviour
 
         if(_characterController2D.below) //if player is on the round
         {
+            isJumping = false;
             if(_startJump)
             {
                 _startJump = false;
                 _moveDirection.y = jumpSpeed;
                 isJumping = true;
+                _characterController2D.DisableCheckGround();
             }
         } 
         else //if player is in the air
