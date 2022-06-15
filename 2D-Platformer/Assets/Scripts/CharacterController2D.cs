@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GlobalTypes;
 
 public class CharacterController2D : MonoBehaviour
 
@@ -9,6 +10,7 @@ public class CharacterController2D : MonoBehaviour
     public LayerMask layerMask; //this is used for recast to only collide with LevelGeom layer
 
     public bool below; //if true, something is below the character
+    public GroundType groundType;
 
     private Vector2 _moveAmount;
     private Vector2 _currPosition;
@@ -72,10 +74,25 @@ public class CharacterController2D : MonoBehaviour
         }
         if(countGroundHits>0)
         {
+            if(_raycastHits[1].collider)
+            {
+                groundType = DetermineGroundType(_raycastHits[1].collider);
+            }
+            else
+            {
+                for(int i=0;i< _raycastHits.Length; i+=2) //if the middle raycast can't detect, check the left and right raycast
+                {
+                    if(_raycastHits[i].collider)
+                    {
+                        groundType = DetermineGroundType(_raycastHits[i].collider);
+                    }
+                }
+            }
             below = true;
         }
         else
         {
+            groundType = GroundType.None;
             below = false;
         }
     }
@@ -91,6 +108,19 @@ public class CharacterController2D : MonoBehaviour
     {
         yield return new WaitForSeconds(.1f);
         _disableCheckGround = false;
+    }
+
+    private GroundType DetermineGroundType(Collider2D collider)
+    {
+        if(collider.GetComponent<GroundEffector>())
+        {
+            GroundEffector groundEffector = collider.GetComponent<GroundEffector>();
+            return groundEffector.groundType;
+        }
+        else
+        {
+            return GroundType.LevelGeom;
+        }
     }
 
     /*private void DrawRays2Debug(Vector2 direction,Color color)

@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
         if(_characterController2D.below) //if player is on the round
         {
+            _moveDirection.y = 0f;
             isJumping = false;
             if(_startJump)
             {
