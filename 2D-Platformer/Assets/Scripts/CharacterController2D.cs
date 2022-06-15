@@ -24,6 +24,10 @@ public class CharacterController2D : MonoBehaviour
 
     private bool _disableCheckGround;
 
+
+    public Vector2 _slopeNormal;
+    public float _slopeAngle;
+
     void Start()
     {
         _rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
@@ -38,6 +42,13 @@ public class CharacterController2D : MonoBehaviour
     void FixedUpdate() //to put physics simulations in fixed update is a better practice than putting them in update method
     {
         _lastPosition = _rigidbody2D.position;
+        if (_slopeAngle != 0 && below == true)
+        {
+            if((_moveAmount.x > 0f && _slopeAngle > 0f) || (_moveAmount.x < 0f && _slopeAngle <0f))
+            {
+                _moveAmount.y = -Mathf.Abs(Mathf.Tan(_slopeAngle * Mathf.Deg2Rad) * _moveAmount.x);
+            }
+        }
         _currPosition = _lastPosition + _moveAmount;
         _rigidbody2D.MovePosition(_currPosition);
         _moveAmount = Vector2.zero; //move amount did its job so reset the value to zero
@@ -77,6 +88,8 @@ public class CharacterController2D : MonoBehaviour
             if(_raycastHits[1].collider)
             {
                 groundType = DetermineGroundType(_raycastHits[1].collider);
+                _slopeNormal = _raycastHits[1].normal;
+                _slopeAngle = Vector2.SignedAngle(_slopeNormal, Vector2.up);
             }
             else
             {
@@ -85,6 +98,8 @@ public class CharacterController2D : MonoBehaviour
                     if(_raycastHits[i].collider)
                     {
                         groundType = DetermineGroundType(_raycastHits[i].collider);
+                        _slopeNormal = _raycastHits[i].normal;
+                        _slopeAngle = Vector2.SignedAngle(_slopeNormal, Vector2.up);
                     }
                 }
             }
