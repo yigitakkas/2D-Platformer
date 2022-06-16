@@ -132,65 +132,6 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
-
-    /*private void CheckGround()
-    {
-        Vector2 raycastOrigin = _rigidbody2D.position - new Vector2(0, _capsuleCollider2D.size.y * .5f * 10); //positions on the bottom of collider
-        _raycastPosition[0] = raycastOrigin + (Vector2.left * _capsuleCollider2D.size.x * .25f * 10 + Vector2.up * .1f); //gives offset to the left and up a little
-        _raycastPosition[1] = raycastOrigin;
-        _raycastPosition[2] = raycastOrigin + (Vector2.right * _capsuleCollider2D.size.x * .25f * 10 + Vector2.up * .1f); //gives offset to the right and up a little
-
-        //DrawRays2Debug(Vector2.down, Color.green);
-
-        int countGroundHits = 0;
-        for(int i=0;i<_raycastPosition.Length; i++)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(_raycastPosition[i], Vector2.down, raycastDist, layerMask);
-
-            if(hit.collider)
-            {
-                _raycastHits[i] = hit;
-                countGroundHits++;
-            }
-        }
-        if(countGroundHits>0)
-        {
-            if(_raycastHits[1].collider)
-            {
-                groundType = DetermineGroundType(_raycastHits[1].collider);
-                _slopeNormal = _raycastHits[1].normal;
-                _slopeAngle = Vector2.SignedAngle(_slopeNormal, Vector2.up);
-            }
-            else
-            {
-                for(int i=0;i< _raycastHits.Length; i+=2) //if the middle raycast can't detect, check the left and right raycast
-                {
-                    if(_raycastHits[i].collider)
-                    {
-                        groundType = DetermineGroundType(_raycastHits[i].collider);
-                        _slopeNormal = _raycastHits[i].normal;
-                        _slopeAngle = Vector2.SignedAngle(_slopeNormal, Vector2.up);
-                    }
-                }
-            }
-            if(_slopeAngle > slopeAngleLimit || _slopeAngle < -slopeAngleLimit)
-            {
-                below = false;
-            }
-            else
-            {
-                below = true;
-            }
-
-            System.Array.Clear(_raycastHits, 0, _raycastHits.Length); //clear the array after results are processed
-        }
-        else
-        {
-            groundType = GroundType.None;
-            below = false;
-        }
-    }*/
-
     public void DisableCheckGround()
     {
         below = false;

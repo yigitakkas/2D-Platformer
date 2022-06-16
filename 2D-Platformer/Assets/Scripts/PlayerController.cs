@@ -50,12 +50,20 @@ public class PlayerController : MonoBehaviour
                     _moveDirection.y *= .5f;
                 }
             }
-            _moveDirection.y -= gravity * Time.deltaTime; //add gravity to y value
+            GravityCalculations();
         }
 
         _characterController2D.Move(_moveDirection * Time.deltaTime);
     }
 
+    void GravityCalculations()
+    {
+        if(_moveDirection.y > 0f && _characterController2D.above) //if character detects something above, reset the momentum to upside
+        {
+            _moveDirection.y = 0f;
+        }
+        _moveDirection.y -= gravity * Time.deltaTime; //add gravity to y value
+    }
     public void OnMovement(InputAction.CallbackContext context)
     {
         _input = context.ReadValue<Vector2>();
@@ -66,10 +74,12 @@ public class PlayerController : MonoBehaviour
         if (context.started)
         {
             _startJump = true;
+            _releaseJump = false;
         }
         else if (context.canceled)
         {
             _releaseJump = true;
+            _startJump = false;
         }
     }
 
