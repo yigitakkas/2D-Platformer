@@ -40,12 +40,7 @@ public class CharacterController2D : MonoBehaviour
         _capsuleCollider2D = gameObject.GetComponent<CapsuleCollider2D>();
     }
 
-    void Update()
-    {
-        
-    }
-
-    void FixedUpdate() //to put physics simulations in fixed update is a better practice than putting them in update method
+    void Update() //to put physics simulations in fixed update is a better practice than putting them in update method, but we made simulation mode to be "update"
     {
         _inAirLastFrame = !below;
         _lastPosition = _rigidbody2D.position;
