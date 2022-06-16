@@ -12,6 +12,9 @@ public class CharacterController2D : MonoBehaviour
     public float slopeAngleLimit = 45f;
 
     public bool below; //if true, something is below the character
+    public bool right;
+    public bool left;
+    public bool above;
     public GroundType groundType;
 
     private Vector2 _moveAmount;
@@ -58,6 +61,7 @@ public class CharacterController2D : MonoBehaviour
         {
             CheckGround();
         }
+        CheckOtherCollisions();
     }
 
     public void Move(Vector2 movement)
@@ -66,6 +70,70 @@ public class CharacterController2D : MonoBehaviour
     }
 
     private void CheckGround()
+    {
+        //DrawRays2Debug(Vector2.down, Color.green);
+        RaycastHit2D hit = Physics2D.CapsuleCast(_capsuleCollider2D.bounds.center, _capsuleCollider2D.size * 10, CapsuleDirection2D.Vertical, 0f, Vector2.down, raycastDist, layerMask);
+        if (hit.collider)
+        {
+            groundType = DetermineGroundType(hit.collider);
+            _slopeNormal = hit.normal;
+            _slopeAngle = Vector2.SignedAngle(_slopeNormal, Vector2.up);
+
+            if(_slopeAngle > slopeAngleLimit || _slopeAngle < -slopeAngleLimit)
+            {
+                below = false;
+            }
+            else
+            {
+                below = true;
+            }
+        }
+        else
+        {
+            groundType = GroundType.None;
+            below = false;
+        }
+    }
+
+    private void CheckOtherCollisions()
+    {
+        RaycastHit2D leftHit = Physics2D.BoxCast(_capsuleCollider2D.bounds.center, _capsuleCollider2D.size *10 *.5f, 0f, Vector2.left , 
+            raycastDist*2, layerMask);
+        if(leftHit.collider)
+        {
+            left = true;
+        }
+        else
+        {
+            left = false;
+        }
+
+        RaycastHit2D rightHit = Physics2D.BoxCast(_capsuleCollider2D.bounds.center, _capsuleCollider2D.size *10 *.5f, 0f, Vector2.right , 
+            raycastDist*2, layerMask);
+        if (rightHit.collider)
+        {
+            right = true;
+        }
+        else
+        {
+            right = false;
+        }
+
+        RaycastHit2D aboveHit = Physics2D.CapsuleCast(_capsuleCollider2D.bounds.center, _capsuleCollider2D.size * 10, CapsuleDirection2D.Vertical, 0f, Vector2.up,
+            raycastDist, layerMask);
+
+        if(aboveHit.collider)
+        {
+            above = true;
+        }
+        else
+        {
+            above = false;
+        }
+    }
+
+
+    /*private void CheckGround()
     {
         Vector2 raycastOrigin = _rigidbody2D.position - new Vector2(0, _capsuleCollider2D.size.y * .5f * 10); //positions on the bottom of collider
         _raycastPosition[0] = raycastOrigin + (Vector2.left * _capsuleCollider2D.size.x * .25f * 10 + Vector2.up * .1f); //gives offset to the left and up a little
@@ -121,7 +189,7 @@ public class CharacterController2D : MonoBehaviour
             groundType = GroundType.None;
             below = false;
         }
-    }
+    }*/
 
     public void DisableCheckGround()
     {
