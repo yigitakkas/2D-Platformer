@@ -28,6 +28,15 @@ public class PlayerController : MonoBehaviour
         _moveDirection.x = _input.x; //x value of input from the player
         _moveDirection.x *= walkSpeed; //affect the x value with walk speed
 
+        if(_moveDirection.x <0)
+        {
+            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        }
+        else if(_moveDirection.x >0)
+        {
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+
         if(_characterController2D.below) //if player is on the round
         {
             _moveDirection.y = 0f;
