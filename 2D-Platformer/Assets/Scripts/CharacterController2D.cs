@@ -16,6 +16,7 @@ public class CharacterController2D : MonoBehaviour
     public bool left;
     public bool above;
     public GroundType groundType;
+    public bool hitGroundFrame;
 
     private Vector2 _moveAmount;
     private Vector2 _currPosition;
@@ -28,6 +29,7 @@ public class CharacterController2D : MonoBehaviour
     private RaycastHit2D[] _raycastHits = new RaycastHit2D[3]; //gives us info about the object we hit with ray
 
     private bool _disableCheckGround;
+    private bool _inAirLastFrame;
 
     private Vector2 _slopeNormal;
     private float _slopeAngle;
@@ -45,6 +47,7 @@ public class CharacterController2D : MonoBehaviour
 
     void FixedUpdate() //to put physics simulations in fixed update is a better practice than putting them in update method
     {
+        _inAirLastFrame = !below;
         _lastPosition = _rigidbody2D.position;
         if (_slopeAngle != 0 && below == true)
         {
@@ -62,6 +65,15 @@ public class CharacterController2D : MonoBehaviour
             CheckGround();
         }
         CheckOtherCollisions();
+
+        if(below && _inAirLastFrame)
+        {
+            hitGroundFrame = true;
+        }
+        else
+        {
+            hitGroundFrame = false;
+        }
     }
 
     public void Move(Vector2 movement)
