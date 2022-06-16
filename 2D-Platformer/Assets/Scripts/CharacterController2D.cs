@@ -8,6 +8,8 @@ public class CharacterController2D : MonoBehaviour
 {
     public float raycastDist = .2f;
     public LayerMask layerMask; //this is used for recast to only collide with LevelGeom layer
+    public float downForceAdjustment = 1.2f;
+    public float slopeAngleLimit = 45f;
 
     public bool below; //if true, something is below the character
     public GroundType groundType;
@@ -24,9 +26,8 @@ public class CharacterController2D : MonoBehaviour
 
     private bool _disableCheckGround;
 
-
-    public Vector2 _slopeNormal;
-    public float _slopeAngle;
+    private Vector2 _slopeNormal;
+    private float _slopeAngle;
 
     void Start()
     {
@@ -47,6 +48,7 @@ public class CharacterController2D : MonoBehaviour
             if((_moveAmount.x > 0f && _slopeAngle > 0f) || (_moveAmount.x < 0f && _slopeAngle <0f))
             {
                 _moveAmount.y = -Mathf.Abs(Mathf.Tan(_slopeAngle * Mathf.Deg2Rad) * _moveAmount.x);
+                _moveAmount.y *= downForceAdjustment;
             }
         }
         _currPosition = _lastPosition + _moveAmount;
@@ -103,7 +105,16 @@ public class CharacterController2D : MonoBehaviour
                     }
                 }
             }
-            below = true;
+            if(_slopeAngle > slopeAngleLimit || _slopeAngle < -slopeAngleLimit)
+            {
+                below = false;
+            }
+            else
+            {
+                below = true;
+            }
+
+            System.Array.Clear(_raycastHits, 0, _raycastHits.Length); //clear the array after results are processed
         }
         else
         {
