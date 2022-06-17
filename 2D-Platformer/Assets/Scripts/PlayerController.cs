@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed = 15f;
     public float gravity = 35f;
     public float jumpSpeed = 15f;
+    public float doubleJumpSpeed = 10f;
+
+    public bool canDoubleJump;
+    public bool isDoubleJumping;
 
     public bool isJumping;
     private bool _startJump;
@@ -16,13 +20,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 _input;
     private Vector2 _moveDirection;
     private CharacterController2D _characterController2D;
-    // Start is called before the first frame update
     void Start()
     {
         _characterController2D = gameObject.GetComponent<CharacterController2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         _moveDirection.x = _input.x; //x value of input from the player
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
         {
             _moveDirection.y = 0f;
             isJumping = false;
+            isDoubleJumping = false;
             if(_startJump)
             {
                 _startJump = false;
@@ -59,6 +62,20 @@ public class PlayerController : MonoBehaviour
                     _moveDirection.y *= .5f;
                 }
             }
+            if(_startJump)
+            {
+                if(canDoubleJump && (!_characterController2D.left && !_characterController2D.right)) 
+                    //check if there is nothing on left or right side of the character
+                {
+                    if(!isDoubleJumping)
+                    {
+                        _moveDirection.y = doubleJumpSpeed;
+                        isDoubleJumping = true;
+                    }
+                }
+                _startJump = false;
+            }
+
             GravityCalculations();
         }
 
