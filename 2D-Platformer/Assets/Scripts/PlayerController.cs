@@ -5,15 +5,24 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Player Properties")]
     public float walkSpeed = 15f;
     public float gravity = 35f;
     public float jumpSpeed = 15f;
     public float doubleJumpSpeed = 10f;
+    public float xWallJumpSpeed = 15f;
+    public float yWallJumpSpeed = 15f;
 
+    [Header("Player Abilites")]
     public bool canDoubleJump;
-    public bool isDoubleJumping;
+    public bool canWallJump;
+    public bool canJumpAfterWallJump;
 
+    [Header("Player State")]
     public bool isJumping;
+    public bool isDoubleJumping;
+    public bool isWallJumping;
+
     private bool _startJump;
     private bool _releaseJump;
 
@@ -27,8 +36,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        _moveDirection.x = _input.x; //x value of input from the player
-        _moveDirection.x *= walkSpeed; //affect the x value with walk speed
+        if(!isWallJumping)
+        {
+            _moveDirection.x = _input.x; //x value of input from the player
+            _moveDirection.x *= walkSpeed; //affect the x value with walk speed
+        }
 
         if(_moveDirection.x <0)
         {
@@ -42,8 +54,12 @@ public class PlayerController : MonoBehaviour
         if(_characterController2D.below) //if player is on the round
         {
             _moveDirection.y = 0f;
+
+            //clearing flags
             isJumping = false;
             isDoubleJumping = false;
+            isWallJumping = false;
+
             if(_startJump)
             {
                 _startJump = false;
@@ -62,8 +78,10 @@ public class PlayerController : MonoBehaviour
                     _moveDirection.y *= .5f;
                 }
             }
+            //if pressed jump button in the air
             if(_startJump)
             {
+                //double jump
                 if(canDoubleJump && (!_characterController2D.left && !_characterController2D.right)) 
                     //check if there is nothing on left or right side of the character
                 {
@@ -71,6 +89,27 @@ public class PlayerController : MonoBehaviour
                     {
                         _moveDirection.y = doubleJumpSpeed;
                         isDoubleJumping = true;
+                    }
+                }
+                //wall jump
+                if(canWallJump && (_characterController2D.left || _characterController2D.right))
+                {
+                    if(_moveDirection.x <=0 && _characterController2D.left)
+                    {
+                        _moveDirection.x = xWallJumpSpeed;
+                        _moveDirection.y = yWallJumpSpeed;
+                        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                    }
+                    else if (_moveDirection.x >= 0 && _characterController2D.right)
+                    {
+                        _moveDirection.x = -xWallJumpSpeed;
+                        _moveDirection.y = yWallJumpSpeed;
+                        transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                    }
+                    StartCoroutine("WallJumpWaiter");
+                    if(canJumpAfterWallJump)
+                    {
+                        isDoubleJumping = false;
                     }
                 }
                 _startJump = false;
@@ -109,4 +148,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    IEnumerator WallJumpWaiter()
+    {
+        isWallJumping = true;
+        yield return new WaitForSeconds(.4f);
+        isWallJumping = false;
+    }
 }
