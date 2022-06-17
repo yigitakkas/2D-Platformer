@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public float xWallJumpSpeed = 15f;
     public float yWallJumpSpeed = 15f;
     public float wallRunAmount = 8f;
+    public float wallSlideAmount = .1f;
 
     [Header("Player Abilites")]
     public bool canDoubleJump;
@@ -20,12 +21,14 @@ public class PlayerController : MonoBehaviour
     public bool canJumpAfterWallJump;
     public bool canWallRun;
     public bool canMultipleWallRun;
+    public bool canWallSlide;
 
     [Header("Player State")]
     public bool isJumping;
     public bool isDoubleJumping;
     public bool isWallJumping;
     public bool isWallRunning;
+    public bool isWallSliding;
 
     private bool _startJump;
     private bool _releaseJump;
@@ -160,7 +163,27 @@ public class PlayerController : MonoBehaviour
         {
             _moveDirection.y = 0f;
         }
-        _moveDirection.y -= gravity * Time.deltaTime; //add gravity to y value
+        //if we are wall sliding, gravity affect can be different
+        if(canWallSlide && (_characterController2D.right || _characterController2D.left))
+        {
+            if(_characterController2D.hitWallFrame)
+            {
+                _moveDirection.y = 0f;
+            }
+            if(_moveDirection.y <=0)
+            {
+                _moveDirection.y -= (gravity * wallSlideAmount) * Time.deltaTime;
+            }
+            else
+            {
+                _moveDirection.y -= gravity * Time.deltaTime;
+            }
+        }
+        else
+        {
+            _moveDirection.y -= gravity * Time.deltaTime; //add gravity to y value
+        }
+
     }
     public void OnMovement(InputAction.CallbackContext context)
     {

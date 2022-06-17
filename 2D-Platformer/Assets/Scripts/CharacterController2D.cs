@@ -17,6 +17,7 @@ public class CharacterController2D : MonoBehaviour
     public bool above;
     public GroundType groundType;
     public bool hitGroundFrame;
+    public bool hitWallFrame;
 
     private Vector2 _moveAmount;
     private Vector2 _currPosition;
@@ -30,6 +31,7 @@ public class CharacterController2D : MonoBehaviour
 
     private bool _disableCheckGround;
     private bool _inAirLastFrame;
+    private bool _noSideCollisionsLastFrame;
 
     private Vector2 _slopeNormal;
     private float _slopeAngle;
@@ -44,6 +46,7 @@ public class CharacterController2D : MonoBehaviour
     {
         _inAirLastFrame = !below;
         _lastPosition = _rigidbody2D.position;
+        _noSideCollisionsLastFrame = (!right && !left);
         if (_slopeAngle != 0 && below == true)
         {
             if((_moveAmount.x > 0f && _slopeAngle > 0f) || (_moveAmount.x < 0f && _slopeAngle <0f))
@@ -68,6 +71,15 @@ public class CharacterController2D : MonoBehaviour
         else
         {
             hitGroundFrame = false;
+        }
+
+        if ((right || left) && _noSideCollisionsLastFrame)
+        {
+            hitWallFrame = true;
+        }
+        else
+        {
+            hitWallFrame = false;
         }
     }
 
