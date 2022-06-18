@@ -102,11 +102,12 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                //when there is no input, go back to standing state
                 if (isDucking || isCreeping)
                 {
                     RaycastHit2D hitCeiling = Physics2D.CapsuleCast(_capsuleCollider2D.bounds.center, transform.localScale/10f, CapsuleDirection2D.Vertical, 0f,
                         Vector2.up, _originalColliderSize.y*10,_characterController2D.layerMask);
-
+                    //check if there is something above to prevent from going back to standing state
                     if(!hitCeiling.collider)
                     {
                         _capsuleCollider2D.size = _originalColliderSize;
@@ -130,6 +131,22 @@ public class PlayerController : MonoBehaviour
         } 
         else //if player is in the air
         {
+            //if we jump when we're ducking
+            if(isDucking || isCreeping && _moveDirection.y >0)
+            {
+                RaycastHit2D hitCeiling = Physics2D.CapsuleCast(_capsuleCollider2D.bounds.center, transform.localScale / 10f, CapsuleDirection2D.Vertical, 0f,
+                        Vector2.up, _originalColliderSize.y * 10, _characterController2D.layerMask);
+                //if there is nothing above, return back to standing pose 
+                if(!hitCeiling.collider)
+                {
+                    _capsuleCollider2D.size = _originalColliderSize;
+                    _capsuleCollider2D.offset = new Vector2(0f, 0f);
+                    _spriteRenderer.sprite = Resources.Load<Sprite>("Adventurer");
+                    isDucking = false;
+                    isCreeping = false;
+                }
+            }
+
             if(_releaseJump)
             {
                 _releaseJump = false;
