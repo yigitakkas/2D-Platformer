@@ -91,7 +91,7 @@ public class CharacterController2D : MonoBehaviour
     private void CheckGround()
     {
         //DrawRays2Debug(Vector2.down, Color.green);
-        RaycastHit2D hit = Physics2D.CapsuleCast(_capsuleCollider2D.bounds.center, _capsuleCollider2D.size * 10, CapsuleDirection2D.Vertical, 0f, Vector2.down, raycastDist, layerMask);
+        RaycastHit2D hit = Physics2D.CapsuleCast(_capsuleCollider2D.bounds.center, _capsuleCollider2D.size * 8, CapsuleDirection2D.Vertical, 0f, Vector2.down, raycastDist, layerMask);
         if (hit.collider)
         {
             groundType = DetermineGroundType(hit.collider);

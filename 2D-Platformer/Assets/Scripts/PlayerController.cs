@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player Properties")]
     public float walkSpeed = 15f;
+    public float creepSpeed = 7.5f;
     public float gravity = 35f;
     public float jumpSpeed = 15f;
     public float doubleJumpSpeed = 10f;
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour
     public bool isWallJumping;
     public bool isWallRunning;
     public bool isWallSliding;
+    public bool isDucking;
+    public bool isCreeping;
 
     private bool _startJump;
     private bool _releaseJump;
@@ -38,9 +41,15 @@ public class PlayerController : MonoBehaviour
     private CharacterController2D _characterController2D;
 
     private bool _ableToWallRun=true;
+    private CapsuleCollider2D _capsuleCollider2D;
+    private Vector2 _originalColliderSize;
+    private SpriteRenderer _spriteRenderer; //when I add sprite, I'll remove this.
     void Start()
     {
         _characterController2D = gameObject.GetComponent<CharacterController2D>();
+        _capsuleCollider2D = gameObject.GetComponent<CapsuleCollider2D>();
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        _originalColliderSize = _capsuleCollider2D.size;
     }
 
     void Update()
@@ -69,6 +78,7 @@ public class PlayerController : MonoBehaviour
             isDoubleJumping = false;
             isWallJumping = false;
 
+            //jumping
             if(_startJump)
             {
                 _startJump = false;
@@ -77,6 +87,46 @@ public class PlayerController : MonoBehaviour
                 _characterController2D.DisableCheckGround();
                 _ableToWallRun = true;
             }
+
+            //ducking or creeping
+            if (_input.y < 0f)
+            {
+                if(!isDucking && !isCreeping)
+                {
+                    _capsuleCollider2D.size = new Vector2(_capsuleCollider2D.size.x, _capsuleCollider2D.size.y / 1.5f);
+                    _capsuleCollider2D.offset = new Vector2(0f, -.02f);
+                    transform.position = new Vector2(transform.position.x, transform.position.y - (_originalColliderSize.y / 4));
+                    isDucking = true;
+                    _spriteRenderer.sprite = Resources.Load<Sprite>("Adventurer_Ducking");
+                }
+            }
+            else
+            {
+                if (isDucking || isCreeping)
+                {
+                    RaycastHit2D hitCeiling = Physics2D.CapsuleCast(_capsuleCollider2D.bounds.center, transform.localScale/10f, CapsuleDirection2D.Vertical, 0f,
+                        Vector2.up, _originalColliderSize.y*10,_characterController2D.layerMask);
+
+                    if(!hitCeiling.collider)
+                    {
+                        _capsuleCollider2D.size = _originalColliderSize;
+                        _capsuleCollider2D.offset = new Vector2(0f, 0f);
+                        transform.position = new Vector2(transform.position.x, transform.position.y + (_originalColliderSize.y / 4));
+                        _spriteRenderer.sprite = Resources.Load<Sprite>("Adventurer");
+                        isDucking = false;
+                        isCreeping = false;
+                    }
+                }
+            }
+            if(isDucking && _moveDirection.x !=0)
+            {
+                isCreeping = true;
+            }
+            else
+            {
+                isCreeping = false;
+            }
+
         } 
         else //if player is in the air
         {
