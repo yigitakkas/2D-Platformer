@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using GlobalTypes;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class PlayerController : MonoBehaviour
     public float wallSlideAmount = .1f;
     public float glideTime = 2f;
     public float glideDescentAmount = 2f;
+    public float powerJumpSpeed = 35f;
+    public float powerJumpWaitTime = 1.5f;
 
     [Header("Player Abilites")]
     public bool canDoubleJump;
@@ -27,6 +30,7 @@ public class PlayerController : MonoBehaviour
     public bool canWallSlide;
     public bool canGlide;
     public bool canGlideAfterWallContact;
+    public bool canPowerJump;
 
     [Header("Player State")]
     public bool isJumping;
@@ -37,6 +41,7 @@ public class PlayerController : MonoBehaviour
     public bool isDucking;
     public bool isCreeping;
     public bool isGliding;
+    public bool isPowerJumping;
 
     private bool _startJump;
     private bool _releaseJump;
@@ -46,11 +51,15 @@ public class PlayerController : MonoBehaviour
     private CharacterController2D _characterController2D;
 
     private bool _ableToWallRun=true;
+
     private CapsuleCollider2D _capsuleCollider2D;
     private Vector2 _originalColliderSize;
     private SpriteRenderer _spriteRenderer; //when I add sprite, I'll remove this.
+
     private float _currentGlideTime;
     private bool _startGlide;
+
+    public float _powerJumpTimer;
     void Start()
     {
         _characterController2D = gameObject.GetComponent<CharacterController2D>();
@@ -90,7 +99,16 @@ public class PlayerController : MonoBehaviour
             if(_startJump)
             {
                 _startJump = false;
-                _moveDirection.y = jumpSpeed;
+                //power jump
+                if(canPowerJump && isDucking && _characterController2D.groundType != GroundType.OneWayPlatform && (_powerJumpTimer > powerJumpWaitTime))
+                {
+                    _moveDirection.y = powerJumpSpeed;
+                    StartCoroutine("PowerJumpWaiter");
+                }
+                else
+                {
+                    _moveDirection.y = jumpSpeed;
+                }
                 isJumping = true;
                 _characterController2D.DisableCheckGround();
                 _ableToWallRun = true;
@@ -107,6 +125,7 @@ public class PlayerController : MonoBehaviour
                     isDucking = true;
                     _spriteRenderer.sprite = Resources.Load<Sprite>("Adventurer_Ducking");
                 }
+                _powerJumpTimer += Time.deltaTime;
             }
             else
             {
@@ -126,10 +145,12 @@ public class PlayerController : MonoBehaviour
                         isCreeping = false;
                     }
                 }
+                _powerJumpTimer = 0f;
             }
             if(isDucking && _moveDirection.x !=0)
             {
                 isCreeping = true;
+                _powerJumpTimer = 0f;
             }
             else
             {
@@ -154,6 +175,7 @@ public class PlayerController : MonoBehaviour
                     isCreeping = false;
                 }
             }
+            _powerJumpTimer = 0f;
 
             if(_releaseJump)
             {
@@ -331,5 +353,12 @@ public class PlayerController : MonoBehaviour
         {
             _ableToWallRun = false;
         }
+    }
+
+    IEnumerator PowerJumpWaiter()
+    {
+        isPowerJumping = true;
+        yield return new WaitForSeconds(.8f);
+        isPowerJumping = false;
     }
 }
