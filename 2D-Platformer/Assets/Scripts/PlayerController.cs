@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public float dashSpeed = 20f;
     public float dashTime = .2f;
     public float dashCooldownTime = 1f;
+    public float groundSlamSpeed = 80f;
 
     [Header("Player Abilites")]
     public bool canDoubleJump;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public bool canPowerJump;
     public bool canGroundDash;
     public bool canAirDash;
+    public bool canGroundSlam;
 
     [Header("Player State")]
     public bool isJumping;
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour
     public bool isGliding;
     public bool isPowerJumping;
     public bool isDashing;
+    public bool isGroundSlamming;
 
     private bool _startJump;
     private bool _releaseJump;
@@ -125,6 +128,7 @@ public class PlayerController : MonoBehaviour
             isDoubleJumping = false;
             isWallJumping = false;
             _currentGlideTime = glideTime;
+            isGroundSlamming = false;
 
             //jumping
             if(_startJump)
@@ -342,6 +346,11 @@ public class PlayerController : MonoBehaviour
                 _moveDirection.y -= gravity * Time.deltaTime;
             }
         }
+        //ground slamming
+        else if(isGroundSlamming && !isPowerJumping && _moveDirection.y <0f)
+        {
+            _moveDirection.y = -groundSlamSpeed;
+        }
         //regular gravity affect
         else if(!isDashing)
         {
@@ -376,6 +385,17 @@ public class PlayerController : MonoBehaviour
                 || (canGroundDash && _characterController2D.below))
             {
                 StartCoroutine("Dash");
+            }
+        }
+    }
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if(context.performed && _input.y <0f)
+        {
+            if(canGroundSlam)
+            {
+                isGroundSlamming = true;
             }
         }
     }

@@ -2133,6 +2133,7 @@ MonoBehaviour:
   dashSpeed: 50
   dashTime: 0.15
   dashCooldownTime: 3
+  groundSlamSpeed: 80
   canDoubleJump: 1
   canWallJump: 1
   canJumpAfterWallJump: 1
@@ -2144,6 +2145,7 @@ MonoBehaviour:
   canPowerJump: 1
   canGroundDash: 1
   canAirDash: 1
+  canGroundSlam: 1
   isJumping: 0
   isDoubleJumping: 0
   isWallJumping: 0
@@ -2154,6 +2156,7 @@ MonoBehaviour:
   isGliding: 0
   isPowerJumping: 0
   isDashing: 0
+  isGroundSlamming: 0
   _dashTimer: 0
 --- !u!114 &1357903210
 MonoBehaviour:
@@ -2293,6 +2296,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 39f18744-2327-4fdc-a0ac-66b73390b062
     m_ActionName: Player/Dash[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1357903209}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: eda617af-dbf8-4a6e-8612-db791727a861
+    m_ActionName: Player/Attack[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
