@@ -2212,7 +2212,7 @@ MonoBehaviour:
   yWallJumpSpeed: 15
   wallRunAmount: 8
   wallSlideAmount: 0.1
-  glideTime: 4
+  glideTime: 2
   glideDescentAmount: 10
   powerJumpSpeed: 30
   powerJumpWaitTime: 0.8
@@ -2243,7 +2243,6 @@ MonoBehaviour:
   isPowerJumping: 0
   isDashing: 0
   isGroundSlamming: 0
-  _dashTimer: 0
 --- !u!114 &1357903210
 MonoBehaviour:
   m_ObjectHideFlags: 0
