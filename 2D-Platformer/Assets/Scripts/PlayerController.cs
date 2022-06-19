@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public float yWallJumpSpeed = 15f;
     public float wallRunAmount = 8f;
     public float wallSlideAmount = .1f;
+    public float glideTime = 2f;
+    public float glideDescentAmount = 2f;
 
     [Header("Player Abilites")]
     public bool canDoubleJump;
@@ -23,6 +25,8 @@ public class PlayerController : MonoBehaviour
     public bool canWallRun;
     public bool canMultipleWallRun;
     public bool canWallSlide;
+    public bool canGlide;
+    public bool canGlideAfterWallContact;
 
     [Header("Player State")]
     public bool isJumping;
@@ -32,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public bool isWallSliding;
     public bool isDucking;
     public bool isCreeping;
+    public bool isGliding;
 
     private bool _startJump;
     private bool _releaseJump;
@@ -44,6 +49,8 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider2D _capsuleCollider2D;
     private Vector2 _originalColliderSize;
     private SpriteRenderer _spriteRenderer; //when I add sprite, I'll remove this.
+    private float _currentGlideTime;
+    private bool _startGlide;
     void Start()
     {
         _characterController2D = gameObject.GetComponent<CharacterController2D>();
@@ -68,8 +75,8 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
-
-        if(_characterController2D.below) //if player is on the round
+        //if player is on the ground
+        if (_characterController2D.below) 
         {
             _moveDirection.y = 0f;
 
@@ -77,6 +84,7 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
             isDoubleJumping = false;
             isWallJumping = false;
+            _currentGlideTime = glideTime;
 
             //jumping
             if(_startJump)
@@ -219,6 +227,19 @@ public class PlayerController : MonoBehaviour
                 }
             }
             GravityCalculations();
+
+            //canGlideAfterWallContact
+            if((_characterController2D.left || _characterController2D.right) && canWallRun)
+            {
+                if(canGlideAfterWallContact)
+                {
+                    _currentGlideTime = glideTime;
+                }
+                else
+                {
+                    _currentGlideTime = 0f;
+                }
+            }
         }
 
         _characterController2D.Move(_moveDirection * Time.deltaTime);
@@ -230,6 +251,7 @@ public class PlayerController : MonoBehaviour
         {
             _moveDirection.y = 0f;
         }
+
         //if we are wall sliding, gravity affect can be different
         if(canWallSlide && (_characterController2D.right || _characterController2D.left))
         {
@@ -246,6 +268,28 @@ public class PlayerController : MonoBehaviour
                 _moveDirection.y -= gravity * Time.deltaTime;
             }
         }
+        //if we are gliding, gravity affect can be different
+        else if(canGlide && _input.y > 0f && _moveDirection.y < 0.2f)
+        {
+            if(_currentGlideTime>0f)
+            {
+                isGliding = true;
+                if(_startGlide)
+                {
+                    _moveDirection.y = 0;
+                    _startGlide = false;
+                }
+                _moveDirection.y -= glideDescentAmount * Time.deltaTime;
+                _currentGlideTime -= Time.deltaTime;
+            }
+            //gliding is over
+            else
+            {
+                isGliding = false;
+                _moveDirection.y -= gravity * Time.deltaTime;
+            }
+        }
+        //regular gravity affect
         else
         {
             _moveDirection.y -= gravity * Time.deltaTime; //add gravity to y value
