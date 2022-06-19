@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     public float glideDescentAmount = 2f;
     public float powerJumpSpeed = 35f;
     public float powerJumpWaitTime = 1.5f;
+    public float dashSpeed = 20f;
+    public float dashTime = .2f;
+    public float dashCooldownTime = 1f;
 
     [Header("Player Abilites")]
     public bool canDoubleJump;
@@ -31,6 +34,8 @@ public class PlayerController : MonoBehaviour
     public bool canGlide;
     public bool canGlideAfterWallContact;
     public bool canPowerJump;
+    public bool canGroundDash;
+    public bool canAirDash;
 
     [Header("Player State")]
     public bool isJumping;
@@ -42,6 +47,7 @@ public class PlayerController : MonoBehaviour
     public bool isCreeping;
     public bool isGliding;
     public bool isPowerJumping;
+    public bool isDashing;
 
     private bool _startJump;
     private bool _releaseJump;
@@ -59,7 +65,10 @@ public class PlayerController : MonoBehaviour
     private float _currentGlideTime;
     private bool _startGlide;
 
-    public float _powerJumpTimer;
+    private float _powerJumpTimer;
+
+    private bool _facingRight;
+    public float _dashTimer;
     void Start()
     {
         _characterController2D = gameObject.GetComponent<CharacterController2D>();
@@ -70,20 +79,42 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(!isWallJumping)
+        //counting down from dash cooldown time
+        if(_dashTimer>0)
+            _dashTimer -= Time.deltaTime;
+
+        if (!isWallJumping)
         {
             _moveDirection.x = _input.x; //x value of input from the player
-            _moveDirection.x *= walkSpeed; //affect the x value with walk speed
+
+            if (_moveDirection.x < 0)
+            {
+                transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                _facingRight = false;
+            }
+            else if (_moveDirection.x > 0)
+            {
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                _facingRight = true;
+            }
+            if(isDashing)
+            {
+                if(_facingRight)
+                {
+                    _moveDirection.x = dashSpeed;
+                }
+                else
+                {
+                    _moveDirection.x = -dashSpeed;
+                }
+                _moveDirection.y = 0;
+            }
+            else
+            {
+                _moveDirection.x *= walkSpeed; //affect the x value with walk speed
+            }
         }
 
-        if(_moveDirection.x <0)
-        {
-            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-        }
-        else if(_moveDirection.x >0)
-        {
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        }
         //if player is on the ground
         if (_characterController2D.below) 
         {
@@ -312,7 +343,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         //regular gravity affect
-        else
+        else if(!isDashing)
         {
             _moveDirection.y -= gravity * Time.deltaTime; //add gravity to y value
         }
@@ -334,6 +365,18 @@ public class PlayerController : MonoBehaviour
         {
             _releaseJump = true;
             _startJump = false;
+        }
+    }
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if(context.started && _dashTimer <=0)
+        {
+            if((canAirDash && !_characterController2D.below) 
+                || (canGroundDash && _characterController2D.below))
+            {
+                StartCoroutine("Dash");
+            }
         }
     }
 
@@ -360,5 +403,13 @@ public class PlayerController : MonoBehaviour
         isPowerJumping = true;
         yield return new WaitForSeconds(.8f);
         isPowerJumping = false;
+    }
+
+    IEnumerator Dash()
+    {
+        isDashing = true;
+        yield return new WaitForSeconds(dashTime);
+        isDashing = false;
+        _dashTimer = dashCooldownTime;
     }
 }
