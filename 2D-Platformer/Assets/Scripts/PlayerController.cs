@@ -153,6 +153,11 @@ public class PlayerController : MonoBehaviour
                 _moveDirection.y = powerJumpSpeed;
                 StartCoroutine("PowerJumpWaiter");
             }
+            //check to see if we are on a one way platform
+            else if(isDucking && _characterController2D.groundType == GroundType.OneWayPlatform)
+            {
+                StartCoroutine(DisableOneWayPlatform(true));
+            }
             else
             {
                 _moveDirection.y = jumpSpeed;
@@ -333,7 +338,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        //counting down from dash cooldown time
+        //counting down from dash cooldown time 
         if(_dashTimer>0)
             _dashTimer -= Time.deltaTime;
 
@@ -367,9 +372,17 @@ public class PlayerController : MonoBehaviour
 
     void GravityCalculations()
     {
+        //detects if something above player
         if(_moveDirection.y > 0f && _characterController2D.above) //if character detects something above, reset the momentum to upside
         {
-            _moveDirection.y = 0f;
+            if(_characterController2D.ceilingType == GroundType.OneWayPlatform)
+            {
+                StartCoroutine(DisableOneWayPlatform(false));
+            }
+            else
+            {
+                _moveDirection.y = 0f;
+            }
         }
 
         //if we are wall sliding, gravity affect can be different
@@ -497,6 +510,42 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dashTime);
         isDashing = false;
         _dashTimer = dashCooldownTime;
+    }
+
+    IEnumerator DisableOneWayPlatform(bool checkBelow)
+    {
+        bool originalCanGroundSlam = canGroundSlam;
+        GameObject tempOneWayPlatform = null;
+
+        if(checkBelow)
+        {
+            Vector2 raycastBelow = transform.position - new Vector3(0, _capsuleCollider2D.size.y * .5f * 10, 0f);
+            RaycastHit2D hit = Physics2D.Raycast(raycastBelow, Vector2.down, _characterController2D.raycastDist*2, _characterController2D.layerMask);
+            if(hit.collider)
+            {
+                tempOneWayPlatform = hit.collider.gameObject;
+            }
+        }
+        else
+        {
+            Vector2 raycastAbove = transform.position + new Vector3(0, _capsuleCollider2D.size.y * .5f * 10, 0f);
+            RaycastHit2D hit = Physics2D.Raycast(raycastAbove, Vector2.up, _characterController2D.raycastDist*2, _characterController2D.layerMask);
+            if (hit.collider)
+            {
+                tempOneWayPlatform = hit.collider.gameObject;
+            }
+        }
+        if(tempOneWayPlatform)
+        {
+            tempOneWayPlatform.GetComponent<EdgeCollider2D>().enabled = false;
+            canGroundSlam = false;
+        }
+        yield return new WaitForSeconds(.25f);
+        if(tempOneWayPlatform)
+        {
+            tempOneWayPlatform.GetComponent<EdgeCollider2D>().enabled = true;
+            canGroundSlam = originalCanGroundSlam;
+        }
     }
     #endregion
 }
