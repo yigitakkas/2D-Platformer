@@ -15,7 +15,12 @@ public class CharacterController2D : MonoBehaviour
     public bool right;
     public bool left;
     public bool above;
+
     public GroundType groundType;
+    public WallType leftWallType;
+    public WallType rightWallType;
+    public GroundType ceilingType;
+
     public bool hitGroundFrame;
     public bool hitWallFrame;
 
@@ -120,10 +125,12 @@ public class CharacterController2D : MonoBehaviour
             raycastDist*2, layerMask);
         if(leftHit.collider)
         {
+            leftWallType = DetermineWallType(leftHit.collider);
             left = true;
         }
         else
         {
+            leftWallType = WallType.None;
             left = false;
         }
 
@@ -131,10 +138,12 @@ public class CharacterController2D : MonoBehaviour
             raycastDist*2, layerMask);
         if (rightHit.collider)
         {
+            rightWallType = DetermineWallType(rightHit.collider);
             right = true;
         }
         else
         {
+            rightWallType = WallType.None;
             right = false;
         }
 
@@ -143,10 +152,12 @@ public class CharacterController2D : MonoBehaviour
 
         if(aboveHit.collider)
         {
+            ceilingType = DetermineGroundType(aboveHit.collider);
             above = true;
         }
         else
         {
+            ceilingType = GroundType.None;
             above = false;
         }
     }
@@ -174,6 +185,19 @@ public class CharacterController2D : MonoBehaviour
         else
         {
             return GroundType.LevelGeom;
+        }
+    }
+
+    private WallType DetermineWallType(Collider2D collider)
+    {
+        if(collider.GetComponent<WallEffector>())
+        {
+            WallEffector wallEffector = collider.GetComponent<WallEffector>();
+            return wallEffector.wallType;
+        }
+        else
+        {
+            return WallType.Normal;
         }
     }
 
