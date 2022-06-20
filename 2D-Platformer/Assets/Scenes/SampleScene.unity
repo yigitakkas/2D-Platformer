@@ -1108,7 +1108,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 17
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1132,7 +1132,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.29, y: -0.85, z: -10}
+  m_LocalPosition: {x: 6.2458353, y: 0.87608993, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1323,7 +1323,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1357903208}
   m_Lens:
     FieldOfView: 34
-    OrthographicSize: 10
+    OrthographicSize: 17
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -2220,6 +2220,7 @@ MonoBehaviour:
   dashTime: 0.15
   dashCooldownTime: 3
   groundSlamSpeed: 80
+  deadzoneValue: 0.15
   canDoubleJump: 1
   canWallJump: 1
   canJumpAfterWallJump: 1

@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public float dashTime = .2f;
     public float dashCooldownTime = 1f;
     public float groundSlamSpeed = 80f;
+    public float deadzoneValue = .15f;
 
     [Header("Player Abilites")]
     public bool canDoubleJump;
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer _spriteRenderer; //when I add sprite, I'll remove this.
 
     private float _currentGlideTime;
-    private bool _startGlide;
+    private bool _startGlide = true;
 
     private float _powerJumpTimer;
 
@@ -170,6 +171,7 @@ public class PlayerController : MonoBehaviour
         isWallJumping = false;
         _currentGlideTime = glideTime;
         isGroundSlamming = false;
+        _startGlide = true;
     }
 
     void InAir()
@@ -319,6 +321,10 @@ public class PlayerController : MonoBehaviour
                 }
                 _moveDirection.y = 0;
             }
+            else if(isCreeping)
+            {
+                _moveDirection.x *= creepSpeed;
+            }
             else
             {
                 _moveDirection.x *= walkSpeed; //affect the x value with walk speed
@@ -330,6 +336,8 @@ public class PlayerController : MonoBehaviour
         //counting down from dash cooldown time
         if(_dashTimer>0)
             _dashTimer -= Time.deltaTime;
+
+        ApplyDeadzones();
 
         ProcessHorizontalMovement();
         //if player is on the ground
@@ -345,6 +353,17 @@ public class PlayerController : MonoBehaviour
         _characterController2D.Move(_moveDirection * Time.deltaTime);
     }
 
+    private void ApplyDeadzones()
+    {
+        if(_input.x > -deadzoneValue && _input.x < deadzoneValue)
+        {
+            _input.x = 0f;
+        }
+        if (_input.y > -deadzoneValue && _input.y < deadzoneValue)
+        {
+            _input.y = 0f;
+        }
+    }
 
     void GravityCalculations()
     {
