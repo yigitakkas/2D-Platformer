@@ -34,12 +34,16 @@ public class CharacterController2D : MonoBehaviour
     private Vector2[] _raycastPosition = new Vector2[3];
     private RaycastHit2D[] _raycastHits = new RaycastHit2D[3]; //gives us info about the object we hit with ray
 
+    private Vector2 _slopeNormal;
+    private float _slopeAngle;
+
     private bool _disableCheckGround;
     private bool _inAirLastFrame;
     private bool _noSideCollisionsLastFrame;
 
-    private Vector2 _slopeNormal;
-    private float _slopeAngle;
+    private Transform _tempMovingPlatform;
+    private Vector2 _movingPlatformVelocity;
+
 
     void Start()
     {
@@ -52,6 +56,8 @@ public class CharacterController2D : MonoBehaviour
         _inAirLastFrame = !below;
         _lastPosition = _rigidbody2D.position;
         _noSideCollisionsLastFrame = (!right && !left);
+
+        //slope adjustment
         if (_slopeAngle != 0 && below == true)
         {
             if((_moveAmount.x > 0f && _slopeAngle > 0f) || (_moveAmount.x < 0f && _slopeAngle <0f))
@@ -60,6 +66,21 @@ public class CharacterController2D : MonoBehaviour
                 _moveAmount.y *= downForceAdjustment;
             }
         }
+        //moving platform adjustment
+        if(groundType == GroundType.MovingPlatform)
+        {
+            //offset the player's movement on the X with moving platform velocity
+            _moveAmount.x += MovingPlatformAdjust().x;
+
+            //if platform is moving down
+            if (MovingPlatformAdjust().y <0f)
+            {
+                //offset the player's movement on the Y
+                _moveAmount.y += MovingPlatformAdjust().y;
+                _moveAmount.y *= downForceAdjustment;
+            }
+        }
+
         _currPosition = _lastPosition + _moveAmount;
         _rigidbody2D.MovePosition(_currPosition);
         _moveAmount = Vector2.zero; //move amount did its job so reset the value to zero
@@ -116,6 +137,10 @@ public class CharacterController2D : MonoBehaviour
         {
             groundType = GroundType.None;
             below = false;
+            if(_tempMovingPlatform)
+            {
+                _tempMovingPlatform = null;
+            }
         }
     }
 
@@ -180,6 +205,13 @@ public class CharacterController2D : MonoBehaviour
         if(collider.GetComponent<GroundEffector>())
         {
             GroundEffector groundEffector = collider.GetComponent<GroundEffector>();
+            if(groundType == GroundType.MovingPlatform)
+            {
+                if(!_tempMovingPlatform)
+                {
+                    _tempMovingPlatform = collider.transform;
+                }
+            }
             return groundEffector.groundType;
         }
         else
@@ -201,11 +233,16 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
-    /*private void DrawRays2Debug(Vector2 direction,Color color)
+    private Vector2 MovingPlatformAdjust()
     {
-        for (int i=0; i < _raycastPosition.Length; i++)
+        if(_tempMovingPlatform && groundType == GroundType.MovingPlatform)
         {
-            Debug.DrawRay(_raycastPosition[i], direction * raycastDist, color);
+            _movingPlatformVelocity = _tempMovingPlatform.GetComponent<MovingPlatform>().difference;
+            return _movingPlatformVelocity;
         }
-    }*/
+        else
+        {
+            return Vector2.zero;
+        }
+    }
 }
