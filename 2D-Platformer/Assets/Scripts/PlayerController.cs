@@ -93,6 +93,10 @@ public class PlayerController : MonoBehaviour
 
     void OnGround()
     {
+        if(_characterController2D.hitGroundFrame)
+        {
+            _tempVelocity = _moveDirection;
+        }
         //clear any downward movement
         _moveDirection.y = 0f;
         ClearAirAbilityFlags();
@@ -106,7 +110,15 @@ public class PlayerController : MonoBehaviour
         if(_characterController2D.groundType == GroundType.JumpPad)
         {
             _jumpPadAmount = _characterController2D.jumpPadAmount;
-            _moveDirection.y = _jumpPadAmount;
+            //if downwards velocity(inverted) is greater than jump pad amount
+            if(-_tempVelocity.y > _jumpPadAmount)
+            {
+                _moveDirection.y = -_tempVelocity.y * .9f;
+            }
+            else
+            {
+                _moveDirection.y = _jumpPadAmount;
+            }
 
             //if holding jump button add a little height each time character bounces
             if(_holdJump)
