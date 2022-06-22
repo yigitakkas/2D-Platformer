@@ -99,6 +99,7 @@ public class PlayerController : MonoBehaviour
         }
         //clear any downward movement
         _moveDirection.y = 0f;
+        isGliding = false;
         ClearAirAbilityFlags();
         Jump();
         DuckingAndCreeping();
@@ -232,6 +233,7 @@ public class PlayerController : MonoBehaviour
     private void WallRunning()
     {
         //wall running
+        isGliding = false;
         if (canWallRun && (_characterController2D.left || _characterController2D.right))
         {
             if (_input.y > 0 && _ableToWallRun)

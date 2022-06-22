@@ -1988,7 +1988,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1179434616}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.46, y: 0.84, z: 0}
+  m_LocalPosition: {x: 23.85, y: 0.84, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2898,7 +2898,7 @@ MonoBehaviour:
   yWallJumpSpeed: 15
   wallRunAmount: 8
   wallSlideAmount: 0.1
-  glideTime: 2
+  glideTime: 1.5
   glideDescentAmount: 10
   powerJumpSpeed: 30
   powerJumpWaitTime: 0.8
