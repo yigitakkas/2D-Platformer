@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
     #region private properties
     private bool _startJump;
     private bool _releaseJump;
+    private bool _holdJump;
 
     private Vector2 _input;
     private Vector2 _moveDirection;
@@ -106,6 +107,21 @@ public class PlayerController : MonoBehaviour
         {
             _jumpPadAmount = _characterController2D.jumpPadAmount;
             _moveDirection.y = _jumpPadAmount;
+
+            //if holding jump button add a little height each time character bounces
+            if(_holdJump)
+            {
+                _jumpPadAdjustment += _moveDirection.y * .1f;
+                _moveDirection.y += _jumpPadAdjustment;
+            }
+            else
+            {
+                _jumpPadAdjustment = 0;
+            }
+            if(_moveDirection.y > _characterController2D.jumpPadUpperLimit)
+            {
+                _moveDirection.y = _characterController2D.jumpPadUpperLimit;
+            }
         }
     }
 
@@ -460,11 +476,13 @@ public class PlayerController : MonoBehaviour
         {
             _startJump = true;
             _releaseJump = false;
+            _holdJump = true;
         }
         else if (context.canceled)
         {
             _releaseJump = true;
             _startJump = false;
+            _holdJump = false;
         }
     }
 
