@@ -84,6 +84,15 @@ public class CharacterController2D : MonoBehaviour
             }
         }
 
+        if(groundType == GroundType.CollapsablePlatform)
+        {
+            if(MovingPlatformAdjust().y < 0f)
+            {
+                _moveAmount.y += MovingPlatformAdjust().y;
+                _moveAmount.y *= downForceAdjustment*4;
+            }
+        }
+
         _currPosition = _lastPosition + _moveAmount;
         _rigidbody2D.MovePosition(_currPosition);
         _moveAmount = Vector2.zero; //move amount did its job so reset the value to zero
@@ -229,6 +238,10 @@ public class CharacterController2D : MonoBehaviour
         }
         else
         {
+            if(_tempMovingPlatform)
+            {
+                _tempMovingPlatform = null;
+            }
             return GroundType.LevelGeom;
         }
     }
@@ -253,9 +266,22 @@ public class CharacterController2D : MonoBehaviour
             _movingPlatformVelocity = _tempMovingPlatform.GetComponent<MovingPlatform>().difference;
             return _movingPlatformVelocity;
         }
+        else if(_tempMovingPlatform && groundType == GroundType.CollapsablePlatform)
+        {
+            _movingPlatformVelocity = _tempMovingPlatform.GetComponent<CollapsablePlatform>().difference;
+            return _movingPlatformVelocity;
+        }
         else
         {
             return Vector2.zero;
+        }
+    }
+
+    public void ClearMovingPlatform()
+    {
+        if(_tempMovingPlatform)
+        {
+            _tempMovingPlatform = null;
         }
     }
 }
