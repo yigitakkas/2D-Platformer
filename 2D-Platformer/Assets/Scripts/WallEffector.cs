@@ -6,4 +6,8 @@ using GlobalTypes;
 public class WallEffector : MonoBehaviour
 {
     public WallType wallType;
+
+    public bool isRunnable;
+    public bool isJumpable;
+    public float wallSlideAmount=.1f;
 }

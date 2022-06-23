@@ -17,9 +17,21 @@ public class CharacterController2D : MonoBehaviour
     public bool above;
 
     public GroundType groundType;
+
     public WallType leftWallType;
-    public WallType rightWallType;
+    public bool leftIsRunnable;
+    public bool leftIsJumpable;
+    public float leftSlideModifier;
+
+    public WallType rightWallType; 
+    public bool rightIsRunnable;
+    public bool rightIsJumpable;
+    public float rightSlideModifier;
+
     public GroundType ceilingType;
+
+    public WallEffector leftWallEffector;
+    public WallEffector rightWallEffector;
 
     public bool hitGroundFrame;
     public bool hitWallFrame;
@@ -170,6 +182,13 @@ public class CharacterController2D : MonoBehaviour
         {
             leftWallType = DetermineWallType(leftHit.collider);
             left = true;
+            leftWallEffector = leftHit.collider.GetComponent<WallEffector>();
+            if(leftWallEffector)
+            {
+                leftIsRunnable = leftWallEffector.isRunnable;
+                leftIsJumpable = leftWallEffector.isJumpable;
+                leftSlideModifier = leftWallEffector.wallSlideAmount;
+            }
         }
         else
         {
@@ -183,6 +202,13 @@ public class CharacterController2D : MonoBehaviour
         {
             rightWallType = DetermineWallType(rightHit.collider);
             right = true;
+            rightWallEffector = rightHit.collider.GetComponent<WallEffector>();
+            if (rightWallEffector)
+            {
+                rightIsRunnable = rightWallEffector.isRunnable;
+                rightIsJumpable = rightWallEffector.isJumpable;
+                rightSlideModifier = rightWallEffector.wallSlideAmount;
+            }
         }
         else
         {

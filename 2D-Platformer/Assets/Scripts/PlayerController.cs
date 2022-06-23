@@ -237,6 +237,14 @@ public class PlayerController : MonoBehaviour
         isGliding = false;
         if (canWallRun && (_characterController2D.left || _characterController2D.right))
         {
+            if(_characterController2D.left && _characterController2D.leftWallEffector && !_characterController2D.leftIsRunnable)
+            {
+                return;
+            }
+            else if(_characterController2D.right && _characterController2D.rightWallEffector && !_characterController2D.rightIsRunnable)
+            {
+                return;
+            }
             if (_input.y > 0 && _ableToWallRun)
             {
                 _moveDirection.y = wallRunAmount;
@@ -301,6 +309,14 @@ public class PlayerController : MonoBehaviour
             //wall jump
             if (canWallJump && (_characterController2D.left || _characterController2D.right))
             {
+                if(_characterController2D.left && _characterController2D.leftWallEffector && !_characterController2D.leftIsJumpable)
+                {
+                    return;
+                }
+                else if(_characterController2D.right && _characterController2D.rightWallEffector && !_characterController2D.rightIsJumpable)
+                {
+                    return;
+                }
                 if (_moveDirection.x <= 0 && _characterController2D.left)
                 {
                     _moveDirection.x = xWallJumpSpeed;
@@ -439,7 +455,18 @@ public class PlayerController : MonoBehaviour
             }
             if(_moveDirection.y <=0)
             {
-                _moveDirection.y -= (gravity * wallSlideAmount) * Time.deltaTime;
+                if(_characterController2D.left && _characterController2D.leftWallEffector)
+                {
+                    _moveDirection.y -= (gravity * _characterController2D.leftSlideModifier) * Time.deltaTime;
+                }
+                else if(_characterController2D.right && _characterController2D.rightWallEffector)
+                {
+                    _moveDirection.y -= (gravity * _characterController2D.rightSlideModifier) * Time.deltaTime;
+                }
+                else
+                {
+                    _moveDirection.y -= (gravity * wallSlideAmount) * Time.deltaTime;
+                }
             }
             else
             {
