@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public float dashCooldownTime = 1f;
     public float groundSlamSpeed = 80f;
     public float deadzoneValue = .15f;
+    public float swimSpeed = 150f;
 
     [Header("Player Abilites")]
     public bool canDoubleJump;
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
     public bool canGroundDash;
     public bool canAirDash;
     public bool canGroundSlam;
+    public bool canSwim;
 
     [Header("Player State")]
     public bool isJumping;
@@ -54,6 +56,7 @@ public class PlayerController : MonoBehaviour
     public bool isPowerJumping;
     public bool isDashing;
     public bool isGroundSlamming;
+    public bool isSwimming;
     #endregion
 
     #region private properties
@@ -306,6 +309,13 @@ public class PlayerController : MonoBehaviour
                     isDoubleJumping = true;
                 }
             }
+
+            //jump in water
+            if(_characterController2D.inWater)
+            {
+                isDoubleJumping = false;
+                _moveDirection.y = jumpSpeed;
+            }
             //wall jump
             if (canWallJump && (_characterController2D.left || _characterController2D.right))
             {
@@ -397,6 +407,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
     void Update()
     {
         //counting down from dash cooldown time 
@@ -411,12 +422,37 @@ public class PlayerController : MonoBehaviour
         {
             OnGround();
         }
+        else if(_characterController2D.inWater)
+        {
+            InWater();
+        }
         //if player is in the air
         else
         {
             InAir();
         }
         _characterController2D.Move(_moveDirection * Time.deltaTime);
+    }
+
+    private void InWater()
+    {
+        ClearGroundAbilityFlags();
+        AirJump();
+        if(_input.y !=0f && canSwim && !_holdJump)
+        {
+            if(!_characterController2D.isSubmerged && _input.y>0)
+            {
+                _moveDirection.y = 0f;
+            }
+            else
+            {
+                _moveDirection.y = (_input.y * swimSpeed) * Time.deltaTime;
+            }
+        }
+        else if(_moveDirection.y < 0f && _input.y ==0f)
+        {
+            _moveDirection.y += 2f;
+        }
     }
 
     private void ApplyDeadzones()

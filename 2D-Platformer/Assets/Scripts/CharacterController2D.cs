@@ -39,6 +39,9 @@ public class CharacterController2D : MonoBehaviour
     public float jumpPadAmount;
     public float jumpPadUpperLimit;
 
+    public bool inWater;
+    public bool isSubmerged;
+
     private Vector2 _moveAmount;
     private Vector2 _currPosition;
     private Vector2 _lastPosition;
@@ -104,9 +107,19 @@ public class CharacterController2D : MonoBehaviour
                 _moveAmount.y *= downForceAdjustment*4;
             }
         }
+        if(!inWater)
+        {
+            _currPosition = _lastPosition + _moveAmount;
+            _rigidbody2D.MovePosition(_currPosition);
+        }
+        else
+        {
+            if(_rigidbody2D.velocity.magnitude < 10f)
+            {
+                _rigidbody2D.AddForce(_moveAmount * 300f);
+            }
+        }
 
-        _currPosition = _lastPosition + _moveAmount;
-        _rigidbody2D.MovePosition(_currPosition);
         _moveAmount = Vector2.zero; //move amount did its job so reset the value to zero
         if(!_disableCheckGround) //if character is jumping, don't check the ground
         {
@@ -308,6 +321,36 @@ public class CharacterController2D : MonoBehaviour
         if(_tempMovingPlatform)
         {
             _tempMovingPlatform = null;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.GetComponent<BuoyancyEffector2D>())
+        {
+            inWater = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.bounds.Contains(_capsuleCollider2D.bounds.min) && collision.bounds.Contains(_capsuleCollider2D.bounds.max)
+            && collision.gameObject.GetComponent<BuoyancyEffector2D>())
+        {
+            isSubmerged = true;
+        }
+        else
+        {
+            isSubmerged = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.gameObject.GetComponent<BuoyancyEffector2D>())
+        {
+            _rigidbody2D.velocity = Vector2.zero;
+            inWater = false;
         }
     }
 }
