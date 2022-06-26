@@ -377,4 +377,9 @@ public class CharacterController2D : MonoBehaviour
             airEffectorDirection = Vector2.zero;
         }
     }
+    public void DeactivateAirEffector()
+    {
+        if (_airEffector)
+            _airEffector.DeactivateEffector();
+    }
 }

@@ -96,6 +96,11 @@ public class PlayerController : MonoBehaviour
 
     void OnGround()
     {
+        if(_characterController2D.airEffectorType == AirEffectorType.Ladder)
+        {
+            InAirEffector();
+            return;
+        }
         if(_characterController2D.hitGroundFrame)
         {
             _tempVelocity = _moveDirection;
@@ -422,6 +427,10 @@ public class PlayerController : MonoBehaviour
         {
             OnGround();
         }
+        else if(_characterController2D.inAirEffector)
+        {
+            InAirEffector();
+        }
         else if(_characterController2D.inWater)
         {
             InWater();
@@ -432,6 +441,31 @@ public class PlayerController : MonoBehaviour
             InAir();
         }
         _characterController2D.Move(_moveDirection * Time.deltaTime);
+    }
+
+    private void InAirEffector()
+    {
+        if(_startJump)
+        {
+            _characterController2D.DeactivateAirEffector();
+            Jump();
+        }
+        //process movement when on ladder
+        if(_characterController2D.airEffectorType==AirEffectorType.Ladder)
+        {
+            if(_input.y > 0f)
+            {
+                _moveDirection.y = _characterController2D.airEffectorSpeed;
+            }
+            else if(_input.y < 0f)
+            {
+                _moveDirection.y = -_characterController2D.airEffectorSpeed;
+            }
+            else
+            {
+                _moveDirection.y = 0f;
+            }
+        }
     }
 
     private void InWater()
