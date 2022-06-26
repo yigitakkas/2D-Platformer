@@ -106,6 +106,12 @@ public class CharacterController2D : MonoBehaviour
                 _moveAmount.y *= downForceAdjustment;
             }
         }
+        //tractor beam adjustment
+        if(_airEffector && airEffectorType == AirEffectorType.TractorBeam)
+        {
+            Vector2 airEffectorVector = airEffectorDirection * airEffectorSpeed;
+            _moveAmount = Vector2.Lerp(_moveAmount, airEffectorVector, Time.deltaTime);
+        }
 
         if(groundType == GroundType.CollapsablePlatform)
         {
@@ -371,6 +377,7 @@ public class CharacterController2D : MonoBehaviour
         if(collision.gameObject.GetComponent<AirEffector>())
         {
             inAirEffector = false;
+            _airEffector.DeactivateEffector();
             _airEffector = null;
             airEffectorType = AirEffectorType.None;
             airEffectorSpeed = 0f;
