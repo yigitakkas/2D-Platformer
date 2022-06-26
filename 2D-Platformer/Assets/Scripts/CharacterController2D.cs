@@ -42,6 +42,12 @@ public class CharacterController2D : MonoBehaviour
     public bool inWater;
     public bool isSubmerged;
 
+    //air effector
+    public bool inAirEffector;
+    public AirEffectorType airEffectorType;
+    public float airEffectorSpeed;
+    public Vector2 airEffectorDirection;
+
     private Vector2 _moveAmount;
     private Vector2 _currPosition;
     private Vector2 _lastPosition;
@@ -61,6 +67,8 @@ public class CharacterController2D : MonoBehaviour
 
     private Transform _tempMovingPlatform;
     private Vector2 _movingPlatformVelocity;
+
+    private AirEffector _airEffector;
 
 
     void Start()
@@ -330,6 +338,14 @@ public class CharacterController2D : MonoBehaviour
         {
             inWater = true;
         }
+        if(collision.gameObject.GetComponent<AirEffector>())
+        {
+            inAirEffector = true;
+            _airEffector = collision.gameObject.GetComponent<AirEffector>(); //this lets us call methods on that component
+            airEffectorType = _airEffector.airEffectorType;
+            airEffectorSpeed = _airEffector.speed;
+            airEffectorDirection = _airEffector.direction;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -351,6 +367,14 @@ public class CharacterController2D : MonoBehaviour
         {
             _rigidbody2D.velocity = Vector2.zero;
             inWater = false;
+        }
+        if(collision.gameObject.GetComponent<AirEffector>())
+        {
+            inAirEffector = false;
+            _airEffector = null;
+            airEffectorType = AirEffectorType.None;
+            airEffectorSpeed = 0f;
+            airEffectorDirection = Vector2.zero;
         }
     }
 }
