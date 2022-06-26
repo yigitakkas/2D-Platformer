@@ -472,6 +472,22 @@ public class PlayerController : MonoBehaviour
             if (_moveDirection.y != 0f)
                 _moveDirection.y = Mathf.Lerp(_moveDirection.y, 0f, Time.deltaTime * 4f);
         }
+        //process movement when gliding in an updraft
+        if(_characterController2D.airEffectorType==AirEffectorType.Updraft)
+        {
+            if(_input.y <=0f)
+            {
+                isGliding = false;
+            }
+            if(isGliding)
+            {
+                _moveDirection.y = _characterController2D.airEffectorSpeed;
+            }
+            else
+            {
+                InAir();
+            }
+        }
 
     }
 
