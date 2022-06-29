@@ -85,6 +85,8 @@ public class PlayerController : MonoBehaviour
     private float _jumpPadAmount = 15f;
     private float _jumpPadAdjustment = 0f;
     public Vector2 _tempVelocity;
+
+    private Animator _animator;
     #endregion
     void Start()
     {
@@ -92,6 +94,7 @@ public class PlayerController : MonoBehaviour
         _capsuleCollider2D = gameObject.GetComponent<CapsuleCollider2D>();
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         _originalColliderSize = _capsuleCollider2D.size;
+        _animator = GetComponentInChildren<Animator>();
     }
 
     void OnGround()
@@ -441,6 +444,23 @@ public class PlayerController : MonoBehaviour
             InAir();
         }
         _characterController2D.Move(_moveDirection * Time.deltaTime);
+        UpdateAnimator();
+    }
+
+    private void UpdateAnimator()
+    {
+        _animator.SetFloat("movementX", _moveDirection.x);
+        _animator.SetFloat("movementY", _moveDirection.y);
+        _animator.SetBool("isGrounded", _characterController2D.below);
+        _animator.SetBool("isJumping", isJumping);
+        _animator.SetBool("doubleJumped", isDoubleJumping);
+        _animator.SetBool("wallJumped", isWallJumping);
+        _animator.SetBool("isWallRunning", isWallRunning);
+        _animator.SetBool("isGliding", isGliding);
+        _animator.SetBool("isDucking", isDucking);
+        _animator.SetBool("isCreeping", isCreeping);
+        _animator.SetBool("isPowerJumping", isPowerJumping);
+        _animator.SetBool("isStomping", isGroundSlamming);
     }
 
     private void InAirEffector()
