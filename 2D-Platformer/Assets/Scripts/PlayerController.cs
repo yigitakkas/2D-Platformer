@@ -449,7 +449,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateAnimator()
     {
-        _animator.SetFloat("movementX", _moveDirection.x);
+        _animator.SetFloat("movementX", Mathf.Abs(_moveDirection.x / walkSpeed));
         _animator.SetFloat("movementY", _moveDirection.y);
         _animator.SetBool("isGrounded", _characterController2D.below);
         _animator.SetBool("isJumping", isJumping);
