@@ -1954,7 +1954,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2546,14 +2546,14 @@ MonoBehaviour:
   m_Follow: {fileID: 1357903208}
   m_Lens:
     FieldOfView: 34
-    OrthographicSize: 4
+    OrthographicSize: 7
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7368422, y: 1}
+    m_SensorSize: {x: 1.9415205, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -4206,7 +4206,7 @@ MonoBehaviour:
   dashSpeed: 50
   dashTime: 0.15
   dashCooldownTime: 3
-  groundSlamSpeed: 80
+  groundSlamSpeed: 40
   deadzoneValue: 0.15
   swimSpeed: 150
   canDoubleJump: 1
