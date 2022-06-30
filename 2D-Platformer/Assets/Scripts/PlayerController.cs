@@ -99,12 +99,12 @@ public class PlayerController : MonoBehaviour
 
     void OnGround()
     {
-        if(_characterController2D.airEffectorType == AirEffectorType.Ladder)
+        if(_characterController2D.AirEffectorType == AirEffectorType.Ladder)
         {
             InAirEffector();
             return;
         }
-        if(_characterController2D.hitGroundFrame)
+        if(_characterController2D.HitGroundFrame)
         {
             _tempVelocity = _moveDirection;
         }
@@ -120,9 +120,9 @@ public class PlayerController : MonoBehaviour
 
     private void JumpPad()
     {
-        if(_characterController2D.groundType == GroundType.JumpPad)
+        if(_characterController2D.GroundType == GroundType.JumpPad)
         {
-            _jumpPadAmount = _characterController2D.jumpPadAmount;
+            _jumpPadAmount = _characterController2D.JumpPadAmount;
             //if downwards velocity(inverted) is greater than jump pad amount
             if(-_tempVelocity.y > _jumpPadAmount)
             {
@@ -143,9 +143,9 @@ public class PlayerController : MonoBehaviour
             {
                 _jumpPadAdjustment = 0;
             }
-            if(_moveDirection.y > _characterController2D.jumpPadUpperLimit)
+            if(_moveDirection.y > _characterController2D.JumpPadUpperLimit)
             {
-                _moveDirection.y = _characterController2D.jumpPadUpperLimit;
+                _moveDirection.y = _characterController2D.JumpPadUpperLimit;
             }
         }
     }
@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
             if (isDucking || isCreeping)
             {
                 RaycastHit2D hitCeiling = Physics2D.CapsuleCast(_capsuleCollider2D.bounds.center, transform.localScale / 10f, CapsuleDirection2D.Vertical, 0f,
-                    Vector2.up, _originalColliderSize.y * 10, _characterController2D.layerMask);
+                    Vector2.up, _originalColliderSize.y * 10, _characterController2D.LayerMask);
                 //check if there is something above to prevent from going back to standing state
                 if (!hitCeiling.collider)
                 {
@@ -203,13 +203,13 @@ public class PlayerController : MonoBehaviour
         {
             _startJump = false;
             //power jump
-            if (canPowerJump && isDucking && _characterController2D.groundType != GroundType.OneWayPlatform && (_powerJumpTimer > powerJumpWaitTime))
+            if (canPowerJump && isDucking && _characterController2D.GroundType != GroundType.OneWayPlatform && (_powerJumpTimer > powerJumpWaitTime))
             {
                 _moveDirection.y = powerJumpSpeed;
                 StartCoroutine("PowerJumpWaiter");
             }
             //check to see if we are on a one way platform
-            else if(isDucking && _characterController2D.groundType == GroundType.OneWayPlatform)
+            else if(isDucking && _characterController2D.GroundType == GroundType.OneWayPlatform)
             {
                 StartCoroutine(DisableOneWayPlatform(true));
             }
@@ -247,13 +247,13 @@ public class PlayerController : MonoBehaviour
     {
         //wall running
         isGliding = false;
-        if (canWallRun && (_characterController2D.left || _characterController2D.right))
+        if (canWallRun && (_characterController2D.Left || _characterController2D.Right))
         {
-            if(_characterController2D.left && _characterController2D.leftWallEffector && !_characterController2D.leftIsRunnable)
+            if(_characterController2D.Left && _characterController2D.LeftWallEffector && !_characterController2D.LeftIsRunnable)
             {
                 return;
             }
-            else if(_characterController2D.right && _characterController2D.rightWallEffector && !_characterController2D.rightIsRunnable)
+            else if(_characterController2D.Right && _characterController2D.RightWallEffector && !_characterController2D.RightIsRunnable)
             {
                 return;
             }
@@ -261,11 +261,11 @@ public class PlayerController : MonoBehaviour
             {
                 ClearAirAbilityFlags();
                 _moveDirection.y = wallRunAmount;
-                if (_characterController2D.left)
+                if (_characterController2D.Left)
                 {
                     transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 }
-                else if (_characterController2D.right)
+                else if (_characterController2D.Right)
                 {
                     transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 }
@@ -283,7 +283,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         //canGlideAfterWallContact
-        if ((_characterController2D.left || _characterController2D.right) && canWallRun)
+        if ((_characterController2D.Left || _characterController2D.Right) && canWallRun)
         {
             if (canGlideAfterWallContact)
             {
@@ -310,7 +310,7 @@ public class PlayerController : MonoBehaviour
         if (_startJump)
         {
             //double jump
-            if (canDoubleJump && (!_characterController2D.left && !_characterController2D.right))
+            if (canDoubleJump && (!_characterController2D.Left && !_characterController2D.Right))
             //check if there is nothing on left or right side of the character
             {
                 if (!isDoubleJumping)
@@ -321,29 +321,29 @@ public class PlayerController : MonoBehaviour
             }
 
             //jump in water
-            if(_characterController2D.inWater)
+            if(_characterController2D.InWater)
             {
                 isDoubleJumping = false;
                 _moveDirection.y = jumpSpeed;
             }
             //wall jump
-            if (canWallJump && (_characterController2D.left || _characterController2D.right))
+            if (canWallJump && (_characterController2D.Left || _characterController2D.Right))
             {
-                if(_characterController2D.left && _characterController2D.leftWallEffector && !_characterController2D.leftIsJumpable)
+                if(_characterController2D.Left && _characterController2D.LeftWallEffector && !_characterController2D.LeftIsJumpable)
                 {
                     return;
                 }
-                else if(_characterController2D.right && _characterController2D.rightWallEffector && !_characterController2D.rightIsJumpable)
+                else if(_characterController2D.Right && _characterController2D.RightWallEffector && !_characterController2D.RightIsJumpable)
                 {
                     return;
                 }
-                if (_moveDirection.x <= 0 && _characterController2D.left)
+                if (_moveDirection.x <= 0 && _characterController2D.Left)
                 {
                     _moveDirection.x = xWallJumpSpeed;
                     _moveDirection.y = yWallJumpSpeed;
                     transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 }
-                else if (_moveDirection.x >= 0 && _characterController2D.right)
+                else if (_moveDirection.x >= 0 && _characterController2D.Right)
                 {
                     _moveDirection.x = -xWallJumpSpeed;
                     _moveDirection.y = yWallJumpSpeed;
@@ -365,7 +365,7 @@ public class PlayerController : MonoBehaviour
         if (isDucking || isCreeping && _moveDirection.y > 0)
         {
             RaycastHit2D hitCeiling = Physics2D.CapsuleCast(_capsuleCollider2D.bounds.center, transform.localScale / 10f, CapsuleDirection2D.Vertical, 0f,
-                    Vector2.up, _originalColliderSize.y * 10, _characterController2D.layerMask);
+                    Vector2.up, _originalColliderSize.y * 10, _characterController2D.LayerMask);
             //if there is nothing above, return back to standing pose 
             if (!hitCeiling.collider)
             {
@@ -428,15 +428,15 @@ public class PlayerController : MonoBehaviour
 
         ProcessHorizontalMovement();
         //if player is on the ground
-        if (_characterController2D.below)
+        if (_characterController2D.Below)
         {
             OnGround();
         }
-        else if(_characterController2D.inAirEffector)
+        else if(_characterController2D.InAirEffector)
         {
             InAirEffector();
         }
-        else if(_characterController2D.inWater)
+        else if(_characterController2D.InWater)
         {
             InWater();
         }
@@ -453,7 +453,7 @@ public class PlayerController : MonoBehaviour
     {
         _animator.SetFloat("movementX", Mathf.Abs(_moveDirection.x / walkSpeed));
         _animator.SetFloat("movementY", _moveDirection.y);
-        _animator.SetBool("isGrounded", _characterController2D.below);
+        _animator.SetBool("isGrounded", _characterController2D.Below);
         _animator.SetBool("isJumping", isJumping);
         _animator.SetBool("doubleJumped", isDoubleJumping);
         _animator.SetBool("wallJumped", isWallJumping);
@@ -463,7 +463,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isCreeping", isCreeping);
         _animator.SetBool("isPowerJumping", isPowerJumping);
         _animator.SetBool("isStomping", isGroundSlamming);
-        _animator.SetBool("isSwimming", _characterController2D.inWater);
+        _animator.SetBool("isSwimming", _characterController2D.InWater);
     }
 
     private void InAirEffector()
@@ -474,15 +474,15 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
         //process movement when on ladder
-        if(_characterController2D.airEffectorType==AirEffectorType.Ladder)
+        if(_characterController2D.AirEffectorType==AirEffectorType.Ladder)
         {
             if(_input.y > 0f)
             {
-                _moveDirection.y = _characterController2D.airEffectorSpeed;
+                _moveDirection.y = _characterController2D.AirEffectorSpeed;
             }
             else if(_input.y < 0f)
             {
-                _moveDirection.y = -_characterController2D.airEffectorSpeed;
+                _moveDirection.y = -_characterController2D.AirEffectorSpeed;
             }
             else
             {
@@ -490,13 +490,13 @@ public class PlayerController : MonoBehaviour
             }
         }
         //process movement when in tractor beam
-        if(_characterController2D.airEffectorType==AirEffectorType.TractorBeam)
+        if(_characterController2D.AirEffectorType==AirEffectorType.TractorBeam)
         {
             if (_moveDirection.y != 0f)
                 _moveDirection.y = Mathf.Lerp(_moveDirection.y, 0f, Time.deltaTime * 4f);
         }
         //process movement when gliding in an updraft
-        if(_characterController2D.airEffectorType==AirEffectorType.Updraft)
+        if(_characterController2D.AirEffectorType==AirEffectorType.Updraft)
         {
             if(_input.y <=0f)
             {
@@ -504,7 +504,7 @@ public class PlayerController : MonoBehaviour
             }
             if(isGliding)
             {
-                _moveDirection.y = _characterController2D.airEffectorSpeed;
+                _moveDirection.y = _characterController2D.AirEffectorSpeed;
             }
             else
             {
@@ -522,7 +522,7 @@ public class PlayerController : MonoBehaviour
         canDoubleJump = false;
         if(_input.y !=0f && canSwim && !_holdJump)
         {
-            if(!_characterController2D.isSubmerged && _input.y>0)
+            if(!_characterController2D.IsSubmerged && _input.y>0)
             {
                 _moveDirection.y = 0f;
             }
@@ -552,9 +552,9 @@ public class PlayerController : MonoBehaviour
     void GravityCalculations()
     {
         //detects if something above player
-        if(_moveDirection.y > 0f && _characterController2D.above) //if character detects something above, reset the momentum to upside
+        if(_moveDirection.y > 0f && _characterController2D.Above) //if character detects something above, reset the momentum to upside
         {
-            if(_characterController2D.ceilingType == GroundType.OneWayPlatform)
+            if(_characterController2D.CeilingType == GroundType.OneWayPlatform)
             {
                 StartCoroutine(DisableOneWayPlatform(false));
             }
@@ -565,21 +565,21 @@ public class PlayerController : MonoBehaviour
         }
 
         //if we are wall sliding, gravity affect can be different
-        if(canWallSlide && (_characterController2D.right || _characterController2D.left))
+        if(canWallSlide && (_characterController2D.Right || _characterController2D.Left))
         {
-            if(_characterController2D.hitWallFrame)
+            if(_characterController2D.HitWallFrame)
             {
                 _moveDirection.y = 0f;
             }
             if(_moveDirection.y <=0)
             {
-                if(_characterController2D.left && _characterController2D.leftWallEffector)
+                if(_characterController2D.Left && _characterController2D.LeftWallEffector)
                 {
-                    _moveDirection.y -= (gravity * _characterController2D.leftSlideModifier) * Time.deltaTime;
+                    _moveDirection.y -= (gravity * _characterController2D.LeftSlideModifier) * Time.deltaTime;
                 }
-                else if(_characterController2D.right && _characterController2D.rightWallEffector)
+                else if(_characterController2D.Right && _characterController2D.RightWallEffector)
                 {
-                    _moveDirection.y -= (gravity * _characterController2D.rightSlideModifier) * Time.deltaTime;
+                    _moveDirection.y -= (gravity * _characterController2D.RightSlideModifier) * Time.deltaTime;
                 }
                 else
                 {
@@ -650,8 +650,8 @@ public class PlayerController : MonoBehaviour
     {
         if(context.started && _dashTimer <=0)
         {
-            if((canAirDash && !_characterController2D.below) 
-                || (canGroundDash && _characterController2D.below))
+            if((canAirDash && !_characterController2D.Below) 
+                || (canGroundDash && _characterController2D.Below))
             {
                 StartCoroutine("Dash");
             }
@@ -712,7 +712,7 @@ public class PlayerController : MonoBehaviour
         if(checkBelow)
         {
             Vector2 raycastBelow = transform.position - new Vector3(0, _capsuleCollider2D.size.y * .5f * 10, 0f);
-            RaycastHit2D hit = Physics2D.Raycast(raycastBelow, Vector2.down, _characterController2D.raycastDist*2, _characterController2D.layerMask);
+            RaycastHit2D hit = Physics2D.Raycast(raycastBelow, Vector2.down, _characterController2D.RaycastDist*2, _characterController2D.LayerMask);
             if(hit.collider)
             {
                 tempOneWayPlatform = hit.collider.gameObject;
@@ -721,7 +721,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             Vector2 raycastAbove = transform.position + new Vector3(0, _capsuleCollider2D.size.y * .5f * 10, 0f);
-            RaycastHit2D hit = Physics2D.Raycast(raycastAbove, Vector2.up, _characterController2D.raycastDist*2, _characterController2D.layerMask);
+            RaycastHit2D hit = Physics2D.Raycast(raycastAbove, Vector2.up, _characterController2D.RaycastDist*2, _characterController2D.LayerMask);
             if (hit.collider)
             {
                 tempOneWayPlatform = hit.collider.gameObject;

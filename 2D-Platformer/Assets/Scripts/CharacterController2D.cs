@@ -6,70 +6,94 @@ using GlobalTypes;
 public class CharacterController2D : MonoBehaviour
 
 {
-    public float raycastDist = .2f;
-    public LayerMask layerMask; //this is used for recast to only collide with LevelGeom layer
-    public float downForceAdjustment = 1.2f;
-    public float slopeAngleLimit = 45f;
+    [Header("General Settings")]
+    [SerializeField] float raycastDist = .2f;
+    [SerializeField] LayerMask layerMask; //this is used for recast to only collide with LevelGeom layer
+    [SerializeField] float downForceAdjustment = 1.2f;
+    [SerializeField] float slopeAngleLimit = 45f;
 
-    public bool below; //if true, something is below the character
-    public bool right;
-    public bool left;
-    public bool above;
+    [Header("Collision Flags")]
+    [SerializeField] bool below; //if true, something is below the character
+    [SerializeField] bool right;
+    [SerializeField] bool left;
+    [SerializeField] bool above;
+    [SerializeField] bool hitGroundFrame;
+    [SerializeField] bool hitWallFrame;
 
-    public GroundType groundType;
+    [Header("Collision Information")]
+    [SerializeField] GroundType groundType;
+    [SerializeField] WallType leftWallType;
+    [SerializeField] bool leftIsRunnable;
+    [SerializeField] bool leftIsJumpable;
+    [SerializeField] float leftSlideModifier;
+    [SerializeField] WallType rightWallType;
+    [SerializeField] bool rightIsRunnable;
+    [SerializeField] bool rightIsJumpable;
+    [SerializeField] float rightSlideModifier;
+    [SerializeField] GroundType ceilingType;
+    [SerializeField] WallEffector leftWallEffector;
+    [SerializeField] WallEffector rightWallEffector;
+    [SerializeField] float jumpPadAmount;
+    [SerializeField] float jumpPadUpperLimit;
 
-    public WallType leftWallType;
-    public bool leftIsRunnable;
-    public bool leftIsJumpable;
-    public float leftSlideModifier;
+    [Header("Air Effector Information")]
+    [SerializeField] bool inAirEffector;
+    [SerializeField] AirEffectorType airEffectorType;
+    [SerializeField] float airEffectorSpeed;
+    [SerializeField] Vector2 airEffectorDirection;
 
-    public WallType rightWallType; 
-    public bool rightIsRunnable;
-    public bool rightIsJumpable;
-    public float rightSlideModifier;
+    [Header("Water Effector Information")]
+    [SerializeField] bool inWater;
+    [SerializeField] bool isSubmerged;
 
-    public GroundType ceilingType;
+    Vector2 _moveAmount;
+    Vector2 _currPosition;
+    Vector2 _lastPosition;
+    Rigidbody2D _rigidbody2D;
+    CapsuleCollider2D _capsuleCollider2D;
+    Vector2[] _raycastPosition = new Vector2[3];
+    RaycastHit2D[] _raycastHits = new RaycastHit2D[3]; //gives us info about the object we hit with ray
+    Vector2 _slopeNormal;
+    float _slopeAngle;
+    bool _disableCheckGround;
+    bool _inAirLastFrame;
+    bool _noSideCollisionsLastFrame;
+    Transform _tempMovingPlatform;
+    Vector2 _movingPlatformVelocity;
+    AirEffector _airEffector;
 
-    public WallEffector leftWallEffector;
-    public WallEffector rightWallEffector;
-
-    public bool hitGroundFrame;
-    public bool hitWallFrame;
-
-    public float jumpPadAmount;
-    public float jumpPadUpperLimit;
-
-    public bool inWater;
-    public bool isSubmerged;
-
-    //air effector
-    public bool inAirEffector;
-    public AirEffectorType airEffectorType;
-    public float airEffectorSpeed;
-    public Vector2 airEffectorDirection;
-
-    private Vector2 _moveAmount;
-    private Vector2 _currPosition;
-    private Vector2 _lastPosition;
-
-    private Rigidbody2D _rigidbody2D;
-    private CapsuleCollider2D _capsuleCollider2D;
-
-    private Vector2[] _raycastPosition = new Vector2[3];
-    private RaycastHit2D[] _raycastHits = new RaycastHit2D[3]; //gives us info about the object we hit with ray
-
-    private Vector2 _slopeNormal;
-    private float _slopeAngle;
-
-    private bool _disableCheckGround;
-    private bool _inAirLastFrame;
-    private bool _noSideCollisionsLastFrame;
-
-    private Transform _tempMovingPlatform;
-    private Vector2 _movingPlatformVelocity;
-
-    private AirEffector _airEffector;
-
+    #region properties
+    public float RaycastDist { get => raycastDist; }
+    public LayerMask LayerMask { get => layerMask; }
+    public float DownForceAdjustment { get => downForceAdjustment; }
+    public float SlopeAngleLimit { get => slopeAngleLimit; }
+    public bool Below { get => below; }
+    public bool Right { get => right; }
+    public bool Left { get => left; }
+    public bool Above { get => above; }
+    public bool HitGroundFrame { get => hitGroundFrame; }
+    public bool HitWallFrame { get => hitWallFrame; }
+    public GroundType GroundType { get => groundType; }
+    public WallType LeftWallType { get => leftWallType; }
+    public bool LeftIsRunnable { get => leftIsRunnable; }
+    public bool LeftIsJumpable { get => leftIsJumpable; }
+    public float LeftSlideModifier { get => leftSlideModifier; }
+    public WallType RightWallType { get => rightWallType; }
+    public bool RightIsRunnable { get => rightIsRunnable; }
+    public bool RightIsJumpable { get => rightIsJumpable; }
+    public float RightSlideModifier { get => rightSlideModifier; }
+    public GroundType CeilingType { get => ceilingType; }
+    public WallEffector LeftWallEffector { get => leftWallEffector; }
+    public WallEffector RightWallEffector { get => rightWallEffector; }
+    public float JumpPadAmount { get => jumpPadAmount; }
+    public float JumpPadUpperLimit { get => jumpPadUpperLimit; }
+    public bool InAirEffector { get => inAirEffector; }
+    public AirEffectorType AirEffectorType { get => airEffectorType; }
+    public float AirEffectorSpeed { get => airEffectorSpeed; }
+    public Vector2 AirEffectorDirection { get => airEffectorDirection; }
+    public bool InWater { get => inWater; }
+    public bool IsSubmerged { get => isSubmerged; }
+    #endregion
 
     void Start()
     {
