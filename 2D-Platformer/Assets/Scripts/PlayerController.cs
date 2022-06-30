@@ -111,6 +111,7 @@ public class PlayerController : MonoBehaviour
         //clear any downward movement
         _moveDirection.y = 0f;
         isGliding = false;
+        canDoubleJump = true;
         ClearAirAbilityFlags();
         Jump();
         DuckingAndCreeping();
@@ -462,6 +463,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isCreeping", isCreeping);
         _animator.SetBool("isPowerJumping", isPowerJumping);
         _animator.SetBool("isStomping", isGroundSlamming);
+        _animator.SetBool("isSwimming", _characterController2D.inWater);
     }
 
     private void InAirEffector()
@@ -515,7 +517,9 @@ public class PlayerController : MonoBehaviour
     private void InWater()
     {
         ClearGroundAbilityFlags();
+        ClearAirAbilityFlags();
         AirJump();
+        canDoubleJump = false;
         if(_input.y !=0f && canSwim && !_holdJump)
         {
             if(!_characterController2D.isSubmerged && _input.y>0)
