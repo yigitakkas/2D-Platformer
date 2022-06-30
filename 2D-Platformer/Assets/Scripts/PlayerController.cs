@@ -258,6 +258,7 @@ public class PlayerController : MonoBehaviour
             }
             if (_input.y > 0 && _ableToWallRun)
             {
+                ClearAirAbilityFlags();
                 _moveDirection.y = wallRunAmount;
                 if (_characterController2D.left)
                 {
