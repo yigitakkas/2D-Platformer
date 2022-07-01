@@ -2553,7 +2553,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9415205, y: 1}
+    m_SensorSize: {x: 1.6938776, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -4190,38 +4190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8092a20930f604b842ee40ca108543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 15
-  creepSpeed: 7.5
-  gravity: 45
-  jumpSpeed: 20
-  doubleJumpSpeed: 15
-  xWallJumpSpeed: 15
-  yWallJumpSpeed: 15
-  wallRunAmount: 8
-  wallSlideAmount: 0.1
-  glideTime: 1.5
-  glideDescentAmount: 10
-  powerJumpSpeed: 30
-  powerJumpWaitTime: 0.8
-  dashSpeed: 50
-  dashTime: 0.15
-  dashCooldownTime: 3
-  groundSlamSpeed: 40
-  deadzoneValue: 0.15
-  swimSpeed: 150
-  canDoubleJump: 1
-  canWallJump: 1
-  canJumpAfterWallJump: 1
-  canWallRun: 1
-  canMultipleWallRun: 1
-  canWallSlide: 1
-  canGlide: 1
-  canGlideAfterWallContact: 1
-  canPowerJump: 1
-  canGroundDash: 1
-  canAirDash: 1
-  canGroundSlam: 1
-  canSwim: 1
+  profile: {fileID: 11400000, guid: f63a519e0e0f1bb4baa35a322c4250cb, type: 2}
   isJumping: 0
   isDoubleJumping: 0
   isWallJumping: 0
