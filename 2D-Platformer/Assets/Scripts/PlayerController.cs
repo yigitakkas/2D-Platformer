@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour
 
     private float _powerJumpTimer;
 
-    private bool _facingRight;
     private float _dashTimer;
 
     private float _jumpPadAmount = 15f;
@@ -372,16 +371,14 @@ public class PlayerController : MonoBehaviour
             if (_moveDirection.x < 0)
             {
                 transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                _facingRight = false;
             }
             else if (_moveDirection.x > 0)
             {
                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                _facingRight = true;
             }
             if (isDashing)
             {
-                if (_facingRight)
+                if (transform.rotation.y == 0)
                 {
                     _moveDirection.x = profile.dashSpeed;
                 }
