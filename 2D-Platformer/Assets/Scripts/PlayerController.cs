@@ -50,9 +50,11 @@ public class PlayerController : MonoBehaviour
 
     private float _jumpPadAmount = 15f;
     private float _jumpPadAdjustment = 0f;
-    public Vector2 _tempVelocity;
+    private Vector2 _tempVelocity;
 
     private Animator _animator;
+
+    private bool _inAirControl = true;
 
     #endregion
 
@@ -241,11 +243,11 @@ public class PlayerController : MonoBehaviour
             {
                 ClearAirAbilityFlags();
                 _moveDirection.y = profile.wallRunAmount;
-                if (_characterController2D.Left)
+                if (_characterController2D.Left && !isWallJumping)
                 {
                     transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 }
-                else if (_characterController2D.Right)
+                else if (_characterController2D.Right && !isWallJumping)
                 {
                     transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 }
@@ -361,7 +363,9 @@ public class PlayerController : MonoBehaviour
 
     private void ProcessHorizontalMovement()
     {
-        if (!isWallJumping)
+        if (!_inAirControl || (isWallJumping && _input.x ==0))
+            return;
+        else
         {
             _moveDirection.x = _input.x; //x value of input from the player
 
@@ -654,8 +658,10 @@ public class PlayerController : MonoBehaviour
     IEnumerator WallJumpWaiter()
     {
         isWallJumping = true;
-        yield return new WaitForSeconds(.4f);
-        isWallJumping = false;
+        _inAirControl = false;
+        yield return new WaitForSeconds(profile.wallJumpDelay);
+        _inAirControl = true;
+        //isWallJumping = false;
     }
 
     IEnumerator WallRunWaiter()
