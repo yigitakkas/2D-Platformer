@@ -121,33 +121,34 @@ public class CharacterController2D : MonoBehaviour
         //moving platform adjustment
         if(groundType == GroundType.MovingPlatform)
         {
+            Vector2 _moveAdjustment = MovingPlatformAdjust();
             //offset the player's movement on the X with moving platform velocity
-            _moveAmount.x += MovingPlatformAdjust().x;
+            _moveAmount.x += _moveAdjustment.x;
 
             //if platform is moving down
-            if (MovingPlatformAdjust().y <0f)
+            if (_moveAdjustment.y <0f)
             {
                 //offset the player's movement on the Y
-                _moveAmount.y += MovingPlatformAdjust().y;
-                _moveAmount.y *= downForceAdjustment;
+                _moveAmount.y += _moveAdjustment.y;
+                //_moveAmount.y *= downForceAdjustment;
             }
         }
-        //tractor beam adjustment
-        if(_airEffector && airEffectorType == AirEffectorType.TractorBeam)
-        {
-            Vector2 airEffectorVector = airEffectorDirection * airEffectorSpeed;
-            _moveAmount = Vector2.Lerp(_moveAmount, airEffectorVector, Time.deltaTime);
-        }
-
         if(groundType == GroundType.CollapsablePlatform)
         {
             if(MovingPlatformAdjust().y < 0f)
             {
                 _moveAmount.y += MovingPlatformAdjust().y;
-                _moveAmount.y *= downForceAdjustment*4;
+                if(!_disableCheckGround && below)
+                    _moveAmount.y *= downForceAdjustment*4;
             }
         }
-        if(moveType.Equals(ControllerMoveType.nonPhysicsBased))
+        //tractor beam adjustment
+        if (_airEffector && airEffectorType == AirEffectorType.TractorBeam)
+        {
+            Vector2 airEffectorVector = airEffectorDirection * airEffectorSpeed;
+            _moveAmount = Vector2.Lerp(_moveAmount, airEffectorVector, Time.deltaTime);
+        }
+        if (moveType.Equals(ControllerMoveType.nonPhysicsBased))
         {
             _currPosition = _lastPosition + _moveAmount;
             _rigidbody2D.MovePosition(_currPosition);
