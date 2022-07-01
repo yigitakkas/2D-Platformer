@@ -712,7 +712,8 @@ public class PlayerController : MonoBehaviour
             tempOneWayPlatform.GetComponent<EdgeCollider2D>().enabled = false;
             profile.canGroundSlam = false;
         }
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.4f);
+
         if(tempOneWayPlatform)
         {
             tempOneWayPlatform.GetComponent<EdgeCollider2D>().enabled = true;
