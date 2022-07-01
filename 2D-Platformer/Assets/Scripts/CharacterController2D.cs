@@ -229,14 +229,19 @@ public class CharacterController2D : MonoBehaviour
 
     private void CheckOtherCollisions()
     {
-        RaycastHit2D leftHit = Physics2D.BoxCast(_capsuleCollider2D.bounds.center, _capsuleCollider2D.size *10 *.5f, 0f, Vector2.left , 
-            raycastDist*2, layerMask);
-        if(leftHit.collider)
+        Vector2 raycastLeftOrigin = _rigidbody2D.position - new Vector2(_capsuleCollider2D.size.x * 10 / 2, 0);
+        Vector2 raycastUpperLeft = raycastLeftOrigin + (Vector2.up * _capsuleCollider2D.size.y * 10 * .35f);
+        Vector2 raycastLowerLeft = raycastLeftOrigin + (Vector2.down * _capsuleCollider2D.size.y * 10 * .35f);
+        //Debug.DrawRay(raycastUpperLeft, Vector2.left * raycastDist, Color.green);
+        //Debug.DrawRay(raycastLowerLeft, Vector2.left * raycastDist, Color.green);
+        RaycastHit2D hitUpperLeft = Physics2D.Raycast(raycastUpperLeft, Vector2.left, raycastDist, layerMask);
+        RaycastHit2D hitLowerLeft = Physics2D.Raycast(raycastLowerLeft, Vector2.left, raycastDist, layerMask);
+        if(hitUpperLeft.collider&&hitLowerLeft.collider)
         {
-            leftWallType = DetermineWallType(leftHit.collider);
+            leftWallType = DetermineWallType(hitLowerLeft.collider);
             left = true;
-            leftWallEffector = leftHit.collider.GetComponent<WallEffector>();
-            if(leftWallEffector)
+            leftWallEffector = hitLowerLeft.collider.GetComponent<WallEffector>();
+            if (leftWallEffector)
             {
                 leftIsRunnable = leftWallEffector.isRunnable;
                 leftIsJumpable = leftWallEffector.isJumpable;
@@ -249,13 +254,18 @@ public class CharacterController2D : MonoBehaviour
             left = false;
         }
 
-        RaycastHit2D rightHit = Physics2D.BoxCast(_capsuleCollider2D.bounds.center, _capsuleCollider2D.size *10 *.5f, 0f, Vector2.right , 
-            raycastDist*2, layerMask);
-        if (rightHit.collider)
+        Vector2 raycastRightOrigin = _rigidbody2D.position + new Vector2(_capsuleCollider2D.size.x * 10 / 2, 0);
+        Vector2 raycastUpperRight = raycastRightOrigin + (Vector2.up * _capsuleCollider2D.size.y * 10 * .35f);
+        Vector2 raycastLowerRight = raycastRightOrigin + (Vector2.down * _capsuleCollider2D.size.y * 10 * .35f);
+        //Debug.DrawRay(raycastUpperRight, Vector2.right * raycastDist, Color.green);
+        //Debug.DrawRay(raycastLowerRight, Vector2.right * raycastDist, Color.green);
+        RaycastHit2D hitUpperRight = Physics2D.Raycast(raycastUpperRight, Vector2.right, raycastDist, layerMask);
+        RaycastHit2D hitLowerRight = Physics2D.Raycast(raycastLowerRight, Vector2.right, raycastDist, layerMask);
+        if (hitUpperRight.collider && hitLowerRight.collider)
         {
-            rightWallType = DetermineWallType(rightHit.collider);
+            rightWallType = DetermineWallType(hitLowerRight.collider);
             right = true;
-            rightWallEffector = rightHit.collider.GetComponent<WallEffector>();
+            rightWallEffector = hitLowerRight.collider.GetComponent<WallEffector>();
             if (rightWallEffector)
             {
                 rightIsRunnable = rightWallEffector.isRunnable;
