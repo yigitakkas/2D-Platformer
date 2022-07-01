@@ -315,14 +315,15 @@ public class CharacterController2D : MonoBehaviour
             GroundEffector groundEffector = collider.GetComponent<GroundEffector>();
             if(groundType == GroundType.MovingPlatform || groundType == GroundType.CollapsablePlatform)
             {
-                if(!_tempMovingPlatform)
+                //if(!_tempMovingPlatform)
+                //{
+                _tempMovingPlatform = collider.transform;
+                if(groundType == GroundType.CollapsablePlatform)
                 {
-                    _tempMovingPlatform = collider.transform;
-                    if(groundType == GroundType.CollapsablePlatform)
-                    {
-                        _tempMovingPlatform.GetComponent<CollapsablePlatform>().CollapsePlatform();
-                    }
+                    if (_tempMovingPlatform.TryGetComponent<CollapsablePlatform>(out CollapsablePlatform cp))
+                        cp.CollapsePlatform();
                 }
+                //}
             }
             return groundEffector.groundType;
         }
@@ -353,13 +354,27 @@ public class CharacterController2D : MonoBehaviour
     {
         if(_tempMovingPlatform && groundType == GroundType.MovingPlatform)
         {
-            _movingPlatformVelocity = _tempMovingPlatform.GetComponent<MovingPlatform>().difference;
-            return _movingPlatformVelocity;
+            if(_tempMovingPlatform.TryGetComponent<MovingPlatform>(out MovingPlatform mp))
+            {
+                _movingPlatformVelocity = mp.difference;
+                return _movingPlatformVelocity;
+            }
+            else
+            {
+                return Vector2.zero;
+            }
         }
         else if(_tempMovingPlatform && groundType == GroundType.CollapsablePlatform)
         {
-            _movingPlatformVelocity = _tempMovingPlatform.GetComponent<CollapsablePlatform>().difference;
-            return _movingPlatformVelocity;
+            if(_tempMovingPlatform.TryGetComponent<CollapsablePlatform>(out CollapsablePlatform cp))
+            {
+                _movingPlatformVelocity = cp.difference;
+                return _movingPlatformVelocity;
+            }
+            else
+            {
+                return Vector2.zero;
+            }
         }
         else
         {
