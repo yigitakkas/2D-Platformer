@@ -24,4 +24,11 @@ namespace GlobalTypes
         Updraft,
         TractorBeam
     }
+
+    public enum ControllerMoveType
+    {
+        physicsBased,
+        nonPhysicsBased,
+        none
+    }
 }

@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour
             }
             isJumping = true;
             _characterController2D.DisableCheckGround();
-            _characterController2D.ClearMovingPlatform();
+            //_characterController2D.ClearMovingPlatform();
             _ableToWallRun = true;
         }
     }

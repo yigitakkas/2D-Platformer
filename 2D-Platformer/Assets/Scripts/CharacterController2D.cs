@@ -9,6 +9,7 @@ public class CharacterController2D : MonoBehaviour
     [Header("General Settings")]
     [SerializeField] float raycastDist = .2f;
     [SerializeField] LayerMask layerMask; //this is used for recast to only collide with LevelGeom layer
+    [SerializeField] ControllerMoveType moveType = ControllerMoveType.nonPhysicsBased;
     [SerializeField] float downForceAdjustment = 1.2f;
     [SerializeField] float slopeAngleLimit = 45f;
 
@@ -93,6 +94,7 @@ public class CharacterController2D : MonoBehaviour
     public Vector2 AirEffectorDirection { get => airEffectorDirection; }
     public bool InWater { get => inWater; }
     public bool IsSubmerged { get => isSubmerged; }
+    public ControllerMoveType MoveType { get => moveType;}
     #endregion
 
     void Start()
@@ -145,12 +147,12 @@ public class CharacterController2D : MonoBehaviour
                 _moveAmount.y *= downForceAdjustment*4;
             }
         }
-        if(!inWater)
+        if(moveType.Equals(ControllerMoveType.nonPhysicsBased))
         {
             _currPosition = _lastPosition + _moveAmount;
             _rigidbody2D.MovePosition(_currPosition);
         }
-        else
+        else if(moveType.Equals(ControllerMoveType.physicsBased))
         {
             if(_rigidbody2D.velocity.magnitude < 10f)
             {
@@ -354,19 +356,20 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
-    public void ClearMovingPlatform()
+    /*public void ClearMovingPlatform()
     {
         if(_tempMovingPlatform)
         {
             _tempMovingPlatform = null;
         }
-    }
+    }*/
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.GetComponent<BuoyancyEffector2D>())
         {
             inWater = true;
+            moveType = ControllerMoveType.physicsBased;
         }
         if(collision.gameObject.GetComponent<AirEffector>())
         {
@@ -397,6 +400,7 @@ public class CharacterController2D : MonoBehaviour
         {
             _rigidbody2D.velocity = Vector2.zero;
             inWater = false;
+            moveType = ControllerMoveType.nonPhysicsBased;
         }
         if(collision.gameObject.GetComponent<AirEffector>())
         {
