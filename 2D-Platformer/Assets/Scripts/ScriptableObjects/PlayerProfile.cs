@@ -7,6 +7,8 @@ public class PlayerProfile : ScriptableObject
 {
     [Header("Player Properties")]
     public float walkSpeed = 15f;
+    public float accelerationSpeed = 1f;
+    public float decelerationSpeed = 1f;
     public float creepSpeed = 7.5f;
     public float gravity = 35f;
     public float jumpSpeed = 15f;

@@ -26,34 +26,36 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region private properties
-    private bool _startJump;
-    private bool _releaseJump;
-    private bool _holdJump;
+    bool _startJump;
+    bool _releaseJump;
+    bool _holdJump;
 
-    private Vector2 _input;
-    private Vector2 _moveDirection;
-    private CharacterController2D _characterController2D;
+    Vector2 _input;
+    Vector2 _moveDirection;
+    CharacterController2D _characterController2D;
 
-    private bool _ableToWallRun=true;
+    bool _ableToWallRun=true;
 
-    private CapsuleCollider2D _capsuleCollider2D;
-    private Vector2 _originalColliderSize;
-    private SpriteRenderer _spriteRenderer; //when I add sprite, I'll remove this.
+    CapsuleCollider2D _capsuleCollider2D;
+    Vector2 _originalColliderSize;
+    SpriteRenderer _spriteRenderer; //when I add sprite, I'll remove this.
 
-    private float _currentGlideTime;
-    private bool _startGlide = true;
+    float _currentGlideTime;
+    bool _startGlide = true;
 
-    private float _powerJumpTimer;
+    float _powerJumpTimer;
 
-    private float _dashTimer;
+    float _dashTimer;
 
-    private float _jumpPadAmount = 15f;
-    private float _jumpPadAdjustment = 0f;
-    private Vector2 _tempVelocity;
+    float _jumpPadAmount = 15f;
+    float _jumpPadAdjustment = 0f;
+    Vector2 _tempVelocity;
 
-    private Animator _animator;
+    Animator _animator;
 
-    private bool _inAirControl = true;
+    bool _inAirControl = true;
+
+    [SerializeField] float _tempMoveSpeed;
 
     #endregion
 
@@ -366,7 +368,15 @@ public class PlayerController : MonoBehaviour
             return;
         else
         {
-            _moveDirection.x = _input.x; //x value of input from the player
+            if(_input.x != 0)
+            {
+                _tempMoveSpeed = Mathf.Lerp(_tempMoveSpeed, _input.x, profile.accelerationSpeed);
+            }
+            else
+            {
+                _tempMoveSpeed = Mathf.Lerp(_tempMoveSpeed, _input.x, profile.decelerationSpeed);
+            }
+            _moveDirection.x = _tempMoveSpeed; //x value of input from the player
 
             if (_moveDirection.x < 0)
             {
