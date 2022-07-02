@@ -4205,6 +4205,7 @@ MonoBehaviour:
   isDashing: 0
   isGroundSlamming: 0
   isSwimming: 0
+  _jumpBufferCounter: 0
   _tempMoveSpeed: 0
 --- !u!114 &1357903210
 MonoBehaviour:

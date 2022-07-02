@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: DefaultProfile
   m_EditorClassIdentifier: 
   walkSpeed: 15
+  accelerationSpeed: 0.05
+  decelerationSpeed: 0.3
   creepSpeed: 7.5
   gravity: 35
   jumpSpeed: 15
@@ -31,7 +33,10 @@ MonoBehaviour:
   groundSlamSpeed: 50
   deadzoneValue: 0.15
   swimSpeed: 150
-  canDoubleJump: 1
+  wallJumpDelay: 0.4
+  coyoteTime: 0.2
+  jumpBufferTime: 0.2
+  canDoubleJump: 0
   canWallJump: 1
   canJumpAfterWallJump: 1
   canWallRun: 1

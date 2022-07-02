@@ -55,6 +55,9 @@ public class PlayerController : MonoBehaviour
 
     bool _inAirControl = true;
 
+    float _coyoteTimeCounter;
+    [SerializeField] float _jumpBufferCounter;
+
     [SerializeField] float _tempMoveSpeed;
 
     #endregion
@@ -82,6 +85,7 @@ public class PlayerController : MonoBehaviour
 
     void OnGround()
     {
+        _coyoteTimeCounter = profile.coyoteTime;
         if(_characterController2D.AirEffectorType == AirEffectorType.Ladder)
         {
             InAirEffector();
@@ -94,7 +98,6 @@ public class PlayerController : MonoBehaviour
         //clear any downward movement
         _moveDirection.y = 0f;
         isGliding = false;
-        profile.canDoubleJump = true;
         ClearAirAbilityFlags();
         Jump();
         DuckingAndCreeping();
@@ -182,9 +185,10 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         //jumping
-        if (_startJump)
+        if (_jumpBufferCounter > 0f)
         {
             _startJump = false;
+            _coyoteTimeCounter = 0;
             //power jump
             if (profile.canPowerJump && isDucking && _characterController2D.GroundType != GroundType.OneWayPlatform && (_powerJumpTimer > profile.powerJumpWaitTime))
             {
@@ -220,6 +224,11 @@ public class PlayerController : MonoBehaviour
 
     void InAir()
     {
+        if(_coyoteTimeCounter>0)
+        {
+            Jump();
+            _coyoteTimeCounter -= Time.deltaTime;
+        }
         ClearGroundAbilityFlags();
         AirJump();
         WallRunning();
@@ -416,8 +425,13 @@ public class PlayerController : MonoBehaviour
             _dashTimer -= Time.deltaTime;
 
         ApplyDeadzones();
-
         ProcessHorizontalMovement();
+
+        if (_startJump)
+            _jumpBufferCounter = profile.jumpBufferTime;
+        else
+            _jumpBufferCounter -= Time.deltaTime;
+
         //if player is on the ground
         if (_characterController2D.Below)
         {

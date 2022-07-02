@@ -27,7 +27,9 @@ public class PlayerProfile : ScriptableObject
     public float groundSlamSpeed = 80f;
     public float deadzoneValue = .15f;
     public float swimSpeed = 150f;
-    public float wallJumpDelay = 0.4f;
+    public float wallJumpDelay = .4f;
+    public float coyoteTime = .2f;
+    public float jumpBufferTime = .2f;
 
     [Header("Player Abilites")]
     public bool canDoubleJump;
