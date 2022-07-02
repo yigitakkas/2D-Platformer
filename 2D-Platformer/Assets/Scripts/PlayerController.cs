@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
     float _coyoteTimeCounter;
     [SerializeField] float _jumpBufferCounter;
 
-    [SerializeField] float _tempMoveSpeed;
+    //[SerializeField] float _tempMoveSpeed;
 
     #endregion
 
@@ -377,7 +377,8 @@ public class PlayerController : MonoBehaviour
             return;
         else
         {
-            if(_input.x != 0)
+            _moveDirection.x = _input.x;
+            /*if(_input.x != 0)
             {
                 _tempMoveSpeed = Mathf.Lerp(_tempMoveSpeed, _input.x, profile.accelerationSpeed);
             }
@@ -385,7 +386,7 @@ public class PlayerController : MonoBehaviour
             {
                 _tempMoveSpeed = Mathf.Lerp(_tempMoveSpeed, _input.x, profile.decelerationSpeed);
             }
-            _moveDirection.x = _tempMoveSpeed; //x value of input from the player
+            _moveDirection.x = _tempMoveSpeed; //x value of input from the player*/
 
             if (_moveDirection.x < 0)
             {
