@@ -410,6 +410,10 @@ public class CharacterController2D : MonoBehaviour
             airEffectorSpeed = _airEffector.speed;
             airEffectorDirection = _airEffector.direction;
         }
+        if(collision.gameObject.GetComponent<HangingSpike>())
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
