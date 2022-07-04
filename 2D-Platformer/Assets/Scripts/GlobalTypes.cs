@@ -7,7 +7,8 @@ namespace GlobalTypes
         OneWayPlatform,
         MovingPlatform,
         CollapsablePlatform,
-        JumpPad
+        JumpPad,
+        Spike
     }
 
     public enum WallType

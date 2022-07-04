@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GlobalTypes;
+using UnityEngine.SceneManagement;
 
 public class CharacterController2D : MonoBehaviour
 
@@ -141,6 +142,10 @@ public class CharacterController2D : MonoBehaviour
                 if(!_disableCheckGround && below)
                     _moveAmount.y *= downForceAdjustment*4;
             }
+        }
+        if(groundType == GroundType.Spike)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         //tractor beam adjustment
         if (_airEffector && airEffectorType == AirEffectorType.TractorBeam)
