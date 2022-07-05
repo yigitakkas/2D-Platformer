@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool isDashing;
     [SerializeField] bool isGroundSlamming;
     [SerializeField] bool isSwimming;
+    [SerializeField] bool isClimbing;
     #endregion
 
     #region private properties
@@ -220,6 +221,7 @@ public class PlayerController : MonoBehaviour
         _currentGlideTime = profile.glideTime;
         isGroundSlamming = false;
         _startGlide = true;
+        isClimbing = false;
     }
 
     void InAir()
@@ -353,6 +355,7 @@ public class PlayerController : MonoBehaviour
 
     private void ClearGroundAbilityFlags()
     {
+        isClimbing = false;
         //if we jump when we're ducking
         if (isDucking || isCreeping && _moveDirection.y > 0)
         {
@@ -470,6 +473,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isPowerJumping", isPowerJumping);
         _animator.SetBool("isStomping", isGroundSlamming);
         _animator.SetBool("isSwimming", _characterController2D.InWater);
+        _animator.SetBool("isClimbing", isClimbing);
     }
 
     private void InAirEffector()
@@ -482,6 +486,7 @@ public class PlayerController : MonoBehaviour
         //process movement when on ladder
         if(_characterController2D.AirEffectorType==AirEffectorType.Ladder)
         {
+            isClimbing = true;
             if(_input.y > 0f)
             {
                 _moveDirection.y = _characterController2D.AirEffectorSpeed;
