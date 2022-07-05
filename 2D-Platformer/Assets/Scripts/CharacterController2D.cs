@@ -414,6 +414,10 @@ public class CharacterController2D : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        if(collision.gameObject.CompareTag("Coin"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
