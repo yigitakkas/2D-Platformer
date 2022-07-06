@@ -474,6 +474,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isStomping", isGroundSlamming);
         _animator.SetBool("isSwimming", _characterController2D.InWater);
         _animator.SetBool("isClimbing", isClimbing);
+        _animator.SetBool("isDead", _characterController2D._isDead);
     }
 
     private void InAirEffector()

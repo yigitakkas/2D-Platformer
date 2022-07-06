@@ -63,6 +63,9 @@ public class CharacterController2D : MonoBehaviour
     Transform _tempMovingPlatform;
     Vector2 _movingPlatformVelocity;
     AirEffector _airEffector;
+    public GameOverScreen gameOverScreen;
+    public ScoreManager scoreManager;
+    public bool _isDead=false;
 
     #region properties
     public float RaycastDist { get => raycastDist; }
@@ -145,7 +148,7 @@ public class CharacterController2D : MonoBehaviour
         }
         if(groundType == GroundType.Spike)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            StartCoroutine("PlayerDeath");
         }
         //tractor beam adjustment
         if (_airEffector && airEffectorType == AirEffectorType.TractorBeam)
@@ -412,7 +415,7 @@ public class CharacterController2D : MonoBehaviour
         }
         if(collision.gameObject.GetComponent<HangingSpike>())
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            StartCoroutine("PlayerDeath");
         }
         if(collision.gameObject.CompareTag("Coin"))
         {
@@ -455,5 +458,14 @@ public class CharacterController2D : MonoBehaviour
     {
         if (_airEffector)
             _airEffector.DeactivateEffector();
+    }
+
+    IEnumerator PlayerDeath()
+    {
+        _isDead = true;
+        gameOverScreen.Setup(scoreManager.score);
+        _rigidbody2D.bodyType = RigidbodyType2D.Static;
+        yield return new WaitForSeconds(.4f);
+        gameObject.SetActive(false);
     }
 }
