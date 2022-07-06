@@ -27,7 +27,14 @@ public class LevelCompletedScreen : MonoBehaviour
     }
     public void NextLevelButton()
     {
-        LoadLevel();
+        if (useIntegerToLoadLevel)
+        {
+            SceneManager.LoadScene(iLevelToLoad);
+        }
+        else
+        {
+            SceneManager.LoadScene(sLevelToLoad);
+        }
     }
 
     public void ExitButton()
@@ -37,13 +44,6 @@ public class LevelCompletedScreen : MonoBehaviour
 
     public void LoadLevel()
     {
-        if (useIntegerToLoadLevel)
-        {
-            SceneManager.LoadScene(iLevelToLoad);
-        }
-        else
-        {
-            SceneManager.LoadScene(sLevelToLoad);
-        }
+        
     }
 }

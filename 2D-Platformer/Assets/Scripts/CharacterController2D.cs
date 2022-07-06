@@ -425,7 +425,6 @@ public class CharacterController2D : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("FinishLine"))
         {
-            Debug.Log("finishline");
             levelCompletedScreen.Setup(scoreManager.score);
             starCountScreen.SetStars(scoreManager.score);
             _rigidbody2D.bodyType = RigidbodyType2D.Static;
