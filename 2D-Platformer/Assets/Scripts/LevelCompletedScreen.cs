@@ -25,7 +25,6 @@ public class LevelCompletedScreen : MonoBehaviour
         gameObject.SetActive(true);
         completedPointsText.text = score.ToString() + " POINTS";
     }
-
     public void NextLevelButton()
     {
         LoadLevel();

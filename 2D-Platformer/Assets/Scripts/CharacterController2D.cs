@@ -66,6 +66,7 @@ public class CharacterController2D : MonoBehaviour
     public GameOverScreen gameOverScreen;
     public LevelCompletedScreen levelCompletedScreen;
     public ScoreManager scoreManager;
+    public StarCountScreen starCountScreen;
     public bool _isDead=false;
 
     #region properties
@@ -424,7 +425,9 @@ public class CharacterController2D : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("FinishLine"))
         {
-            levelCompletedScreen.Setup(scoreManager.score); 
+            Debug.Log("finishline");
+            levelCompletedScreen.Setup(scoreManager.score);
+            starCountScreen.SetStars(scoreManager.score);
             _rigidbody2D.bodyType = RigidbodyType2D.Static;
             gameObject.SetActive(false);
         }
