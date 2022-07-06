@@ -64,6 +64,7 @@ public class CharacterController2D : MonoBehaviour
     Vector2 _movingPlatformVelocity;
     AirEffector _airEffector;
     public GameOverScreen gameOverScreen;
+    public LevelCompletedScreen levelCompletedScreen;
     public ScoreManager scoreManager;
     public bool _isDead=false;
 
@@ -420,6 +421,12 @@ public class CharacterController2D : MonoBehaviour
         if(collision.gameObject.CompareTag("Coin"))
         {
             Destroy(collision.gameObject);
+        }
+        if(collision.gameObject.CompareTag("FinishLine"))
+        {
+            levelCompletedScreen.Setup(scoreManager.score); 
+            _rigidbody2D.bodyType = RigidbodyType2D.Static;
+            gameObject.SetActive(false);
         }
     }
 
