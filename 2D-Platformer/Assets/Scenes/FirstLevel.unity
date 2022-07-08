@@ -542,6 +542,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5745652900498192874, guid: 4b16fc4d1aa99bb428c0505fae428a79, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5745652901017449108, guid: 4b16fc4d1aa99bb428c0505fae428a79, type: 3}
       propertyPath: m_Camera
       value: 
@@ -887,6 +891,10 @@ PrefabInstance:
       value: Adventurer
       objectReference: {fileID: 0}
     - target: {fileID: 6080491187189880873, guid: d2683590389c02940a2f31fa5f750c53, type: 3}
+      propertyPath: profile
+      value: 
+      objectReference: {fileID: 11400000, guid: 06feb802a72d9f941b665c2fc3918059, type: 2}
+    - target: {fileID: 6080491187189880873, guid: d2683590389c02940a2f31fa5f750c53, type: 3}
       propertyPath: scoreManager
       value: 
       objectReference: {fileID: 1182436563}
@@ -902,6 +910,10 @@ PrefabInstance:
       propertyPath: levelCompletedScreen
       value: 
       objectReference: {fileID: 1176507541}
+    - target: {fileID: 6080491187189880874, guid: d2683590389c02940a2f31fa5f750c53, type: 3}
+      propertyPath: profile
+      value: 
+      objectReference: {fileID: 11400000, guid: 06feb802a72d9f941b665c2fc3918059, type: 2}
     - target: {fileID: 6080491187189880875, guid: d2683590389c02940a2f31fa5f750c53, type: 3}
       propertyPath: m_RootOrder
       value: 7

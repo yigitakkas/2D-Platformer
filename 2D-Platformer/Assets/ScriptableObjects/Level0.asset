@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 631b69a36ee4965449696b22382694ee, type: 3}
-  m_Name: DefaultProfile
+  m_Name: Level0
   m_EditorClassIdentifier: 
   walkSpeed: 15
   accelerationSpeed: 0.05
@@ -36,16 +36,16 @@ MonoBehaviour:
   wallJumpDelay: 0.4
   coyoteTime: 0.2
   jumpBufferTime: 0.2
-  canDoubleJump: 1
-  canWallJump: 1
-  canJumpAfterWallJump: 1
-  canWallRun: 1
-  canMultipleWallRun: 1
-  canWallSlide: 1
-  canGlide: 1
-  canGlideAfterWallContact: 1
-  canPowerJump: 1
-  canGroundDash: 1
-  canAirDash: 1
-  canGroundSlam: 1
-  canSwim: 1
+  canDoubleJump: 0
+  canWallJump: 0
+  canJumpAfterWallJump: 0
+  canWallRun: 0
+  canMultipleWallRun: 0
+  canWallSlide: 0
+  canGlide: 0
+  canGlideAfterWallContact: 0
+  canPowerJump: 0
+  canGroundDash: 0
+  canAirDash: 0
+  canGroundSlam: 0
+  canSwim: 0
