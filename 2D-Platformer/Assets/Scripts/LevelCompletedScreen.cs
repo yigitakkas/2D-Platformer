@@ -39,11 +39,6 @@ public class LevelCompletedScreen : MonoBehaviour
 
     public void ExitButton()
     {
-
-    }
-
-    public void LoadLevel()
-    {
-        
+        SceneManager.LoadScene("MainMenu");
     }
 }
