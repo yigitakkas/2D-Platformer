@@ -639,33 +639,42 @@ public class PlayerController : MonoBehaviour
     #region Input Methods
     public void OnMovement(InputAction.CallbackContext context)
     {
-        _input = context.ReadValue<Vector2>();
+        if(!PauseMenu.isPaused)
+        {
+            _input = context.ReadValue<Vector2>();
+        }
     }
 
     public void OnJump (InputAction.CallbackContext context)
     {
-        if (context.started)
+        if(!PauseMenu.isPaused)
         {
-            _startJump = true;
-            _releaseJump = false;
-            _holdJump = true;
-        }
-        else if (context.canceled)
-        {
-            _releaseJump = true;
-            _startJump = false;
-            _holdJump = false;
+            if (context.started)
+            {
+                _startJump = true;
+                _releaseJump = false;
+                _holdJump = true;
+            }
+            else if (context.canceled)
+            {
+                _releaseJump = true;
+                _startJump = false;
+                _holdJump = false;
+            }
         }
     }
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if(context.started && _dashTimer <=0)
+        if(!PauseMenu.isPaused)
         {
-            if((profile.canAirDash && !_characterController2D.Below) 
-                || (profile.canGroundDash && _characterController2D.Below))
+            if (context.started && _dashTimer <= 0)
             {
-                StartCoroutine("Dash");
+                if ((profile.canAirDash && !_characterController2D.Below)
+                    || (profile.canGroundDash && _characterController2D.Below))
+                {
+                    StartCoroutine("Dash");
+                }
             }
         }
     }
