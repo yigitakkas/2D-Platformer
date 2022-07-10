@@ -47,5 +47,5 @@ MonoBehaviour:
   canPowerJump: 0
   canGroundDash: 0
   canAirDash: 0
-  canGroundSlam: 0
+  canGroundSlam: 1
   canSwim: 0
