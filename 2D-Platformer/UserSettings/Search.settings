@@ -7,7 +7,7 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.8040E7BB" = "PALETT"
+	"last_search.8040E7BB" = "gizmos"
 	"OpenInspectorPreview.8040E7BB" = "0"
 	"currentGroup.8040E7BB" = "all"
 }
@@ -54,6 +54,7 @@ providers = {
 	}
 }
 recentSearches = [
+	"g"
 	"\""
 	"t"
 	"an"
