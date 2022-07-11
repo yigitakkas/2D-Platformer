@@ -4,19 +4,19 @@ using UnityEngine;
 using UnityEngine.Audio;
 using TMPro;
 using System.Linq;
+using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
     public AudioMixer audioMixer;
     public TMP_Dropdown resolutionDropdown;
     public TMP_Dropdown graphicsDropdown;
+    public TMP_Dropdown windowModeDropdown;
+    public Slider volumeSlider;
     Resolution[] resolutions;
 
     private void Start()
     {
-        graphicsDropdown.value = 5;
-        graphicsDropdown.RefreshShownValue();
-
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -32,8 +32,7 @@ public class SettingsMenu : MonoBehaviour
             }
         }
         resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
+        LoadAllSettings();
     }
     public void SetVolume(float volume)
     {
@@ -62,5 +61,21 @@ public class SettingsMenu : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height,Screen.fullScreen);
+    }
+
+    public void SaveAllSettings()
+    {
+        SaveSystem.SaveSettings(this);
+    }
+
+    public void LoadAllSettings()
+    {
+        SettingsData data = SaveSystem.LoadSettings();
+        resolutionDropdown.value = data.resolution;
+        graphicsDropdown.value = data.graphics;
+        windowModeDropdown.value = data.windowMode;
+        volumeSlider.value = data.volume;
+
+        graphicsDropdown.RefreshShownValue();
     }
 }
