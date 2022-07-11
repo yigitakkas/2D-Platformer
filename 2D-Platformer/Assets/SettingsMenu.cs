@@ -11,48 +11,29 @@ public class SettingsMenu : MonoBehaviour
     public TMP_Dropdown resolutionDropdown;
     public TMP_Dropdown graphicsDropdown;
     Resolution[] resolutions;
-    List<Resolution> uniqueResolutions = new List<Resolution>();
 
     private void Start()
     {
         graphicsDropdown.value = 5;
         graphicsDropdown.RefreshShownValue();
 
+        resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
-        //List<string> options = new List<string>();
-        List<string> res = new List<string>();
+        List<string> options = new List<string>();
         int currentResolutionIndex = 0;
-        int counter = 0;
-        foreach(Resolution sr in Screen.resolutions)
-        {
-            string newRes = string.Format("{0}x{1}", sr.width, sr.height);
-            if (!res.Contains(newRes))
-            {
-                res.Add(newRes);
-                currentResolutionIndex = counter;
-                counter++;
-            }
-        }
-        for(int i=0;i<10;i++)
-        {
-            Debug.Log(res[i] + " ");
-        }
-        resolutionDropdown.AddOptions(res);
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
 
-        /*for(int i=0; i<resolutions.Length;i++)
+        for(int i=0; i<resolutions.Length;i++)
         {
             string option = resolutions[i].width + " x " + resolutions[i].height + " @ " + resolutions[i].refreshRate + " Hz";
             options.Add(option);
-
             if(resolutions[i].Equals(Screen.currentResolution))
             {
                 currentResolutionIndex = i;
             }
-        }*/
-
-        //resolutionDropdown.AddOptions(options);
+        }
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.RefreshShownValue();
     }
     public void SetVolume(float volume)
     {
@@ -79,6 +60,7 @@ public class SettingsMenu : MonoBehaviour
 
     public void SetResolution(int resolutionIndex)
     {
+        Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height,Screen.fullScreen);
     }
 }
