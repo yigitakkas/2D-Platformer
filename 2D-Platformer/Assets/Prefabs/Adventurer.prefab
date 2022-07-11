@@ -311,9 +311,9 @@ MonoBehaviour:
   inWater: 0
   isSubmerged: 0
   gameOverScreen: {fileID: 0}
-  levelCompletedScreen: {fileID: 0}
   scoreManager: {fileID: 0}
   starCountScreen: {fileID: 0}
+  levelScript: {fileID: 0}
   _isDead: 0
 --- !u!114 &6080491187189880874
 MonoBehaviour:

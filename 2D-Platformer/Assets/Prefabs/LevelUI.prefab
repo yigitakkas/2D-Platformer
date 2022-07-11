@@ -831,7 +831,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &5745652901017449109
 MonoBehaviour:
@@ -1243,7 +1243,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5871860531568697265}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -45, z: -3207.8572}
+  m_LocalPosition: {x: 0, y: -45, z: 0}
   m_LocalScale: {x: 35.642857, y: 35.642857, z: 35.642857}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1424,8 +1424,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5871860532364521259}
-        m_TargetAssemblyTypeName: LevelCompletedScreen, Assembly-CSharp
+      - m_Target: {fileID: 1176507545}
+        m_TargetAssemblyTypeName: LevelScript, Assembly-CSharp
         m_MethodName: ExitButton
         m_Mode: 1
         m_Arguments:
@@ -1461,7 +1461,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5871860531677410511}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -45, z: -3207.8572}
+  m_LocalPosition: {x: 0, y: -45, z: 0}
   m_LocalScale: {x: 35.642857, y: 35.642857, z: 35.642857}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1545,7 +1545,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5871860531730567526}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -45, z: -3207.8572}
+  m_LocalPosition: {x: 0, y: -45, z: 0}
   m_LocalScale: {x: 35.642857, y: 35.642857, z: 35.642857}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1726,9 +1726,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5871860532364521259}
-        m_TargetAssemblyTypeName: LevelCompletedScreen, Assembly-CSharp
-        m_MethodName: NextLevelButton
+      - m_Target: {fileID: 1176507545}
+        m_TargetAssemblyTypeName: LevelScript, Assembly-CSharp
+        m_MethodName: NextButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1763,7 +1763,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5871860531956927855}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -45, z: -3207.8572}
+  m_LocalPosition: {x: 0, y: -45, z: 0}
   m_LocalScale: {x: 35.642857, y: 35.642857, z: 35.642857}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1968,7 +1968,7 @@ GameObject:
   - component: {fileID: 5871860532364521258}
   - component: {fileID: 5871860532364521257}
   - component: {fileID: 5871860532364521256}
-  - component: {fileID: 5871860532364521259}
+  - component: {fileID: 1176507545}
   m_Layer: 5
   m_Name: LevelCompletedScreen
   m_TagString: Untagged
@@ -2038,7 +2038,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5871860532364521259
+--- !u!114 &1176507545
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2047,13 +2047,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5871860532364521261}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45062074c7728c24da46eda99535d16c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4614c6949ace70d4bb8683942817155e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   completedPointsText: {fileID: 5871860532605819880}
-  iLevelToLoad: 0
-  sLevelToLoad: trials
-  useIntegerToLoadLevel: 0
 --- !u!1 &5871860532605819882
 GameObject:
   m_ObjectHideFlags: 0

@@ -64,9 +64,9 @@ public class CharacterController2D : MonoBehaviour
     Vector2 _movingPlatformVelocity;
     AirEffector _airEffector;
     public GameOverScreen gameOverScreen;
-    public LevelCompletedScreen levelCompletedScreen;
     public ScoreManager scoreManager;
     public StarCountScreen starCountScreen;
+    public LevelScript levelScript;
     public bool _isDead=false;
 
     #region properties
@@ -425,10 +425,15 @@ public class CharacterController2D : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("FinishLine"))
         {
-            levelCompletedScreen.Setup(scoreManager.score);
-            starCountScreen.SetStars(scoreManager.score);
+            levelScript.Setup(scoreManager.score);
+            levelScript.PassLevel();
+            starCountScreen.SetStars(scoreManager.score); 
             _rigidbody2D.bodyType = RigidbodyType2D.Static;
             gameObject.SetActive(false);
+            /*levelCompletedScreen.Setup(scoreManager.score);
+            starCountScreen.SetStars(scoreManager.score);
+            _rigidbody2D.bodyType = RigidbodyType2D.Static;
+            gameObject.SetActive(false);*/
         }
     }
 
