@@ -5,10 +5,10 @@ using UnityEngine.Audio;
 using TMPro;
 using System.Linq;
 using UnityEngine.UI;
+using System;
 
 public class SettingsMenu : MonoBehaviour
 {
-    public AudioMixer audioMixer;
     public TMP_Dropdown resolutionDropdown;
     public TMP_Dropdown graphicsDropdown;
     public TMP_Dropdown windowModeDropdown;
@@ -33,10 +33,30 @@ public class SettingsMenu : MonoBehaviour
         }
         resolutionDropdown.AddOptions(options);
         LoadAllSettings();
+        if (!PlayerPrefs.HasKey("musicVolume"))
+        {
+            PlayerPrefs.SetFloat("musicVolume", 1);
+            LoadVolume();
+        }
+        else
+        {
+            LoadVolume();
+        }
     }
     public void SetVolume(float volume)
     {
-        audioMixer.SetFloat("volume", volume);
+        AudioListener.volume = volumeSlider.value;
+        SaveVolume();
+    }
+
+    private void SaveVolume()
+    {
+        PlayerPrefs.SetFloat("musicVolume", volumeSlider.value);
+    }
+
+    private void LoadVolume()
+    {
+        volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
     }
 
     public void SetQuality(int qualityIndex)
@@ -74,7 +94,7 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.value = data.resolution;
         graphicsDropdown.value = data.graphics;
         windowModeDropdown.value = data.windowMode;
-        volumeSlider.value = data.volume;
+        //volumeSlider.value = data.volume;
 
         graphicsDropdown.RefreshShownValue();
     }

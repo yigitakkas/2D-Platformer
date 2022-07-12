@@ -3,11 +3,13 @@ using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
     public static AudioManager instance;
+    [SerializeField] Slider volumeSlider;
     //public GameObject levelCompleted;
     //public GameObject gameOver;
     // Start is called before the first frame update
@@ -34,6 +36,15 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         Play("Theme");
+        if(!PlayerPrefs.HasKey("musicVolume"))
+        {
+            PlayerPrefs.SetFloat("musicVolume", 1);
+            Load();
+        }
+        else
+        {
+            Load();
+        }
     }
 
     public void Play(string name)
@@ -46,8 +57,20 @@ public class AudioManager : MonoBehaviour
         }
         s.source.Play();
     }
-    void Update()
-    {
 
+    public void ChangeVolume()
+    {
+        AudioListener.volume = volumeSlider.value;
+        Save();
+    }
+
+    private void Load()
+    {
+        volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
+    }
+
+    private void Save()
+    {
+        PlayerPrefs.SetFloat("musicVolume", volumeSlider.value);
     }
 }

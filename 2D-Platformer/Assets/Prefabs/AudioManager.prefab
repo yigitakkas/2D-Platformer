@@ -47,7 +47,7 @@ MonoBehaviour:
   sounds:
   - name: GameOver
     clip: {fileID: 8300000, guid: 08506a80f6abb2e419d5b3992768404e, type: 3}
-    volume: 0.5
+    volume: 0.25
     pitch: 1
     loop: 0
     source: {fileID: 0}
