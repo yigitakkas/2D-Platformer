@@ -8,12 +8,14 @@ public class GameOverScreen : MonoBehaviour
 {
     public TextMeshProUGUI endGamePointsText;
     public static GameOverScreen _gameOverScreen;
+    public static bool gameOverUp;
     private void Start()
     {
         if (_gameOverScreen == null)
         {
             _gameOverScreen = this;
         }
+        gameOverUp = true;
     }
     public void Setup(int score)
     {
@@ -24,10 +26,12 @@ public class GameOverScreen : MonoBehaviour
     public void RestartButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        gameOverUp = false;
     }
 
     public void ExitButton()
     {
         SceneManager.LoadScene("MainMenu");
+        gameOverUp = false;
     }
 }

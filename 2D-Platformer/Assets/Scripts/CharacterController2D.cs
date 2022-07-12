@@ -151,6 +151,7 @@ public class CharacterController2D : MonoBehaviour
         if(groundType == GroundType.Spike)
         {
             StartCoroutine("PlayerDeath");
+            return;
         }
         //tractor beam adjustment
         if (_airEffector && airEffectorType == AirEffectorType.TractorBeam)
@@ -425,6 +426,7 @@ public class CharacterController2D : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("FinishLine"))
         {
+            FindObjectOfType<AudioManager>().Play("LevelUp");
             levelScript.Setup(scoreManager.score);
             levelScript.PassLevel();
             starCountScreen.SetStars(scoreManager.score); 
@@ -477,9 +479,10 @@ public class CharacterController2D : MonoBehaviour
     IEnumerator PlayerDeath()
     {
         _isDead = true;
-        gameOverScreen.Setup(scoreManager.score);
         _rigidbody2D.bodyType = RigidbodyType2D.Static;
         yield return new WaitForSeconds(.4f);
+        FindObjectOfType<AudioManager>().Play("GameOver");
         gameObject.SetActive(false);
+        gameOverScreen.Setup(scoreManager.score);
     }
 }
