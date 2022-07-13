@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: GameOver
-    clip: {fileID: 8300000, guid: 08506a80f6abb2e419d5b3992768404e, type: 3}
+    clip: {fileID: 8300000, guid: e88a07976695cf145b736cbaada35eae, type: 3}
     volume: 0.25
     pitch: 1
     loop: 0
@@ -58,8 +58,33 @@ MonoBehaviour:
     loop: 1
     source: {fileID: 0}
   - name: LevelUp
-    clip: {fileID: 8300000, guid: 23c8a1c63e50ddc41a6470c0fdd8c3a0, type: 3}
+    clip: {fileID: 8300000, guid: a21dc7b4dee1fd94a936ac7a0ad26531, type: 3}
     volume: 0.5
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: ButtonClick
+    clip: {fileID: 8300000, guid: 2a5ab64db6cc8f84984dc1b4ec7f8419, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Hover
+    clip: {fileID: 8300000, guid: bde10ddfe49a7a44cba82adf82c27ae5, type: 3}
+    volume: 0.25
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Back
+    clip: {fileID: 8300000, guid: 5b9a946bde873114b86c2714ce90545b, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: MainMenu
+    clip: {fileID: 8300000, guid: f5e3fdd113d34cb48a3f218b4942a379, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  volumeSlider: {fileID: 0}
