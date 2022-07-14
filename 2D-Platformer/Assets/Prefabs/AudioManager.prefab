@@ -52,7 +52,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Theme
-    clip: {fileID: 8300000, guid: c80c2040eb8537542b6b18ceaff63c36, type: 3}
+    clip: {fileID: 8300000, guid: f5e3fdd113d34cb48a3f218b4942a379, type: 3}
     volume: 0.4
     pitch: 1
     loop: 1
@@ -82,7 +82,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: MainMenu
-    clip: {fileID: 8300000, guid: f5e3fdd113d34cb48a3f218b4942a379, type: 3}
+    clip: {fileID: 8300000, guid: c80c2040eb8537542b6b18ceaff63c36, type: 3}
     volume: 0.4
     pitch: 1
     loop: 1

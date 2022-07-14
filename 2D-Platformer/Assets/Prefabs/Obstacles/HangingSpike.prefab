@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1025940217727673921}
   m_Layer: 0
   m_Name: HangingSpike
-  m_TagString: Enemy
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

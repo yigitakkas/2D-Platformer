@@ -148,11 +148,6 @@ public class CharacterController2D : MonoBehaviour
                     _moveAmount.y *= downForceAdjustment*4;
             }
         }
-        if(groundType == GroundType.Spike)
-        {
-            StartCoroutine("PlayerDeath");
-            return;
-        }
         //tractor beam adjustment
         if (_airEffector && airEffectorType == AirEffectorType.TractorBeam)
         {
@@ -416,7 +411,7 @@ public class CharacterController2D : MonoBehaviour
             airEffectorSpeed = _airEffector.speed;
             airEffectorDirection = _airEffector.direction;
         }
-        if(collision.gameObject.GetComponent<HangingSpike>())
+        if(collision.CompareTag("Spike"))
         {
             StartCoroutine("PlayerDeath");
         }
