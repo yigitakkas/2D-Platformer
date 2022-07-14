@@ -157,7 +157,10 @@ public class CharacterController2D : MonoBehaviour
         if (moveType.Equals(ControllerMoveType.nonPhysicsBased))
         {
             _currPosition = _lastPosition + _moveAmount;
-            _rigidbody2D.MovePosition(_currPosition);
+            if(_rigidbody2D.bodyType!= RigidbodyType2D.Static)
+            {
+                _rigidbody2D.MovePosition(_currPosition);
+            }
         }
         else if(moveType.Equals(ControllerMoveType.physicsBased))
         {
