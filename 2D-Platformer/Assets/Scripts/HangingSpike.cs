@@ -23,13 +23,13 @@ public class HangingSpike : MonoBehaviour
     {
         if (playerDetected)
             return;
-        playerHit = Physics2D.Raycast(transform.position, Vector2.down, 20f, playerLayer);
-        Debug.DrawRay(transform.position, Vector2.down * 20f, Color.red);
+        playerHit = Physics2D.Raycast(transform.position, Vector2.down, 10f, playerLayer);
+        Debug.DrawRay(transform.position, Vector2.down * 10f, Color.red);
         if(playerHit)
         {
             playerDetected = true;
+            spikeBody.gravityScale = 4f;
             Invoke("DeactivateObject", 3f);
-            spikeBody.gravityScale = 1f;
         }
     }
 

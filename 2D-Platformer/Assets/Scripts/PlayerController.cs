@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
 
     CapsuleCollider2D _capsuleCollider2D;
     Vector2 _originalColliderSize;
-    SpriteRenderer _spriteRenderer; //when I add sprite, I'll remove this.
 
     float _currentGlideTime;
     bool _startGlide = true;
@@ -79,7 +78,6 @@ public class PlayerController : MonoBehaviour
     {
         _characterController2D = gameObject.GetComponent<CharacterController2D>();
         _capsuleCollider2D = gameObject.GetComponent<CapsuleCollider2D>();
-        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         _originalColliderSize = _capsuleCollider2D.size;
         _animator = GetComponentInChildren<Animator>();
     }
@@ -148,7 +146,6 @@ public class PlayerController : MonoBehaviour
                 _capsuleCollider2D.offset = new Vector2(0f, -.02f);
                 transform.position = new Vector2(transform.position.x, transform.position.y - (_originalColliderSize.y / 4));
                 isDucking = true;
-                _spriteRenderer.sprite = Resources.Load<Sprite>("Adventurer_Ducking");
             }
             _powerJumpTimer += Time.deltaTime;
         }
@@ -165,7 +162,6 @@ public class PlayerController : MonoBehaviour
                     _capsuleCollider2D.size = _originalColliderSize;
                     _capsuleCollider2D.offset = new Vector2(0f, 0f);
                     transform.position = new Vector2(transform.position.x, transform.position.y + (_originalColliderSize.y / 4));
-                    _spriteRenderer.sprite = Resources.Load<Sprite>("Adventurer");
                     isDucking = false;
                     isCreeping = false;
                 }
@@ -366,7 +362,6 @@ public class PlayerController : MonoBehaviour
             {
                 _capsuleCollider2D.size = _originalColliderSize;
                 _capsuleCollider2D.offset = new Vector2(0f, 0f);
-                _spriteRenderer.sprite = Resources.Load<Sprite>("Adventurer");
                 isDucking = false;
                 isCreeping = false;
             }
