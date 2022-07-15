@@ -58,6 +58,9 @@ public class PlayerController : MonoBehaviour
     float _coyoteTimeCounter;
     [SerializeField] float _jumpBufferCounter;
 
+    public bool isPaused = false;
+    public PauseMenu pauseMenu;
+
     //[SerializeField] float _tempMoveSpeed;
 
     #endregion
@@ -634,42 +637,33 @@ public class PlayerController : MonoBehaviour
     #region Input Methods
     public void OnMovement(InputAction.CallbackContext context)
     {
-        if(!PauseMenu.isPaused)
-        {
-            _input = context.ReadValue<Vector2>();
-        }
+        _input = context.ReadValue<Vector2>();
     }
 
     public void OnJump (InputAction.CallbackContext context)
     {
-        if(!PauseMenu.isPaused)
+        if (context.started)
         {
-            if (context.started)
-            {
-                _startJump = true;
-                _releaseJump = false;
-                _holdJump = true;
-            }
-            else if (context.canceled)
-            {
-                _releaseJump = true;
-                _startJump = false;
-                _holdJump = false;
-            }
+            _startJump = true;
+            _releaseJump = false;
+            _holdJump = true;
+        }
+        else if (context.canceled)
+        {
+            _releaseJump = true;
+            _startJump = false;
+            _holdJump = false;
         }
     }
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if(!PauseMenu.isPaused)
+        if (context.started && _dashTimer <= 0)
         {
-            if (context.started && _dashTimer <= 0)
+            if ((profile.canAirDash && !_characterController2D.Below)
+                || (profile.canGroundDash && _characterController2D.Below))
             {
-                if ((profile.canAirDash && !_characterController2D.Below)
-                    || (profile.canGroundDash && _characterController2D.Below))
-                {
-                    StartCoroutine("Dash");
-                }
+                StartCoroutine("Dash");
             }
         }
     }
@@ -684,6 +678,27 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    public void OnEscape(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            if(!isPaused)
+            {
+                //this.GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
+                //Time.timeScale = 0;
+                pauseMenu.ActivateMenu();
+                isPaused = true;
+            }
+            else
+            {
+                //this.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
+                //Time.timeScale = 1;
+                pauseMenu.DeactivateMenu();
+                isPaused = false;
+            }
+        }
+    }
     #endregion
 
     #region Coroutines
@@ -693,7 +708,6 @@ public class PlayerController : MonoBehaviour
         _inAirControl = false;
         yield return new WaitForSeconds(profile.wallJumpDelay);
         _inAirControl = true;
-        //isWallJumping = false;
     }
 
     IEnumerator WallRunWaiter()

@@ -4918,6 +4918,7 @@ MonoBehaviour:
   controlsOpened: 0
   pauseMenuUI: {fileID: 8088551104518687860}
   controlsMenuUI: {fileID: 8088551103566770107}
+  playerController: {fileID: 0}
 --- !u!1 &8088551103520030189
 GameObject:
   m_ObjectHideFlags: 0
@@ -5580,7 +5581,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: 
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

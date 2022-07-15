@@ -1690,10 +1690,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 974396438}
-    - target: {fileID: 1702296287, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
+    - target: {fileID: 8088551103353056472, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 6080491187329202862}
     - target: {fileID: 8088551103353056473, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1790,60 +1790,43 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 974396438}
-    - target: {fileID: 8088551103520030187, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
     - target: {fileID: 8088551103713716459, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 974396438}
-    - target: {fileID: 8088551103713716459, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
     - target: {fileID: 8088551103713716460, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 974396438}
-    - target: {fileID: 8088551103713716460, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
     - target: {fileID: 8088551103713716461, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 974396438}
-    - target: {fileID: 8088551103713716461, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
     - target: {fileID: 8088551104339880266, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 974396437}
-    - target: {fileID: 8088551104339880266, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8088551104444511275, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 974396438}
-    - target: {fileID: 8088551104444511275, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
     - target: {fileID: 8088551104847381611, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 974396438}
-    - target: {fileID: 8088551104847381611, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
+--- !u!114 &1548666380 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8088551103353056472, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
+  m_PrefabInstance: {fileID: 1548666379}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe99c4b83e0550479671dc9f5393453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1639429648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6407,9 +6390,37 @@ MonoBehaviour:
     m_ActionId: eda617af-dbf8-4a6e-8612-db791727a861
     m_ActionName: Player/Attack[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4d1d1397-03d4-4d3a-b917-b187ff0cad61
-    m_ActionName: Menu/Escape[/Keyboard/escape]
+      m_Calls:
+      - m_Target: {fileID: 6080491187329202862}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnEscape
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ea4db155-1fec-4b34-9dc5-5d4266dd53bd
+    m_ActionName: Player/Escape[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6080491187329202862}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnEscape
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 61624bcf-2299-4ca6-af96-eccc60d6bfc9
+    m_ActionName: UI/Escape[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Touch
   m_DefaultActionMap: Player
@@ -6492,6 +6503,8 @@ MonoBehaviour:
   isSwimming: 0
   isClimbing: 0
   _jumpBufferCounter: 0
+  isPaused: 0
+  pauseMenu: {fileID: 1548666380}
 --- !u!4 &6080491187329202863
 Transform:
   m_ObjectHideFlags: 0
@@ -40166,7 +40179,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8198428116855630725}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -27.670258, y: -0.38458, z: -10}
+  m_LocalPosition: {x: -29.336905, y: -0.38638, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40229,7 +40242,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8.4375
+  orthographic size: 7.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

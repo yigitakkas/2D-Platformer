@@ -20597,14 +20597,14 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 527795554}
   - {fileID: 555866591}
+  - {fileID: 527795554}
   - {fileID: 1970427510}
   - {fileID: 375380892}
   - {fileID: 1094707898}
   - {fileID: 1819745796}
-  - {fileID: 18107466}
   - {fileID: 1302974681}
+  - {fileID: 18107466}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -35274,9 +35274,37 @@ MonoBehaviour:
     m_ActionId: eda617af-dbf8-4a6e-8612-db791727a861
     m_ActionName: Player/Attack[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4d1d1397-03d4-4d3a-b917-b187ff0cad61
-    m_ActionName: Menu/Escape[/Keyboard/escape]
+      m_Calls:
+      - m_Target: {fileID: 6080491186277354963}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnEscape
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ea4db155-1fec-4b34-9dc5-5d4266dd53bd
+    m_ActionName: Player/Escape[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6080491186277354963}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnEscape
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 61624bcf-2299-4ca6-af96-eccc60d6bfc9
+    m_ActionName: UI/Escape[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Touch
   m_DefaultActionMap: Player
@@ -35325,6 +35353,8 @@ MonoBehaviour:
   isSwimming: 0
   isClimbing: 0
   _jumpBufferCounter: 0
+  isPaused: 0
+  pauseMenu: {fileID: 8088551103713716456}
 --- !u!50 &6080491186277354966
 Rigidbody2D:
   serializedVersion: 4
@@ -35614,6 +35644,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1491718927762416971}
+    - target: {fileID: 8088551103353056472, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 6080491186277354963}
     - target: {fileID: 8088551103353056473, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -35736,6 +35770,17 @@ PrefabInstance:
       objectReference: {fileID: 1491718927762416971}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
+--- !u!114 &8088551103713716456 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8088551103353056472, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
+  m_PrefabInstance: {fileID: 8088551103713716455}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe99c4b83e0550479671dc9f5393453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8198428115731824248
 Transform:
   m_ObjectHideFlags: 0
