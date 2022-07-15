@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SecondLevel.unity
     guid: 7f1dec0159a60b549b6fb4799b897b31
   - enabled: 1
+    path: Assets/Scenes/ThirdLevel.unity
+    guid: 96d0f5740cfeacf408cce4316c31f3b8
+  - enabled: 1
     path: Assets/Scenes/trials.unity
     guid: 0b80f3f3b7d80f64e88813f366c877d8
   - enabled: 1
