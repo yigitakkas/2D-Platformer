@@ -223,6 +223,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DiamondCoin
       objectReference: {fileID: 0}
+    - target: {fileID: 3675893096103572662, guid: f0acd7014fd720446a14a341f20e6bb2, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3675893096103572663, guid: f0acd7014fd720446a14a341f20e6bb2, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -533,6 +537,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoldCoin (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 56608060787312197, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 56608060787312198, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -594,6 +602,10 @@ PrefabInstance:
     - target: {fileID: 56608060787312195, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
       propertyPath: m_Name
       value: GoldCoin (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 56608060787312197, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 56608060787312198, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
       propertyPath: m_RootOrder
@@ -659,7 +671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 56608060787312198, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 56608060787312198, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20383,9 +20395,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoldCoin (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 56608060787312197, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 56608060787312198, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 56608060787312198, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20520,7 +20536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3675893096103572663, guid: f0acd7014fd720446a14a341f20e6bb2, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3675893096103572663, guid: f0acd7014fd720446a14a341f20e6bb2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23066,9 +23082,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoldCoin (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 56608060787312197, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 56608060787312198, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 56608060787312198, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23128,9 +23148,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoldCoin (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 56608060787312197, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 56608060787312198, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 56608060787312198, guid: 06f68850b541af0408b5cfa39a7a18c3, type: 3}
       propertyPath: m_LocalPosition.x

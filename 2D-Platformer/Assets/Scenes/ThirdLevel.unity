@@ -332,6 +332,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Play
       objectReference: {fileID: 0}
+    - target: {fileID: 8088551103353056472, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 1197204636561459852}
     - target: {fileID: 8088551103353056473, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -482,6 +486,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
+--- !u!114 &1297233120 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8088551103353056472, guid: 2b2aa1a4bd78d704db5f3b42826bd249, type: 3}
+  m_PrefabInstance: {fileID: 1297233119}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe99c4b83e0550479671dc9f5393453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1571690199
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -804,6 +819,8 @@ MonoBehaviour:
   isSwimming: 0
   isClimbing: 0
   _jumpBufferCounter: 0
+  isPaused: 0
+  pauseMenu: {fileID: 1297233120}
 --- !u!4 &1197204636561459853
 Transform:
   m_ObjectHideFlags: 0
@@ -950,9 +967,37 @@ MonoBehaviour:
     m_ActionId: eda617af-dbf8-4a6e-8612-db791727a861
     m_ActionName: Player/Attack[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4d1d1397-03d4-4d3a-b917-b187ff0cad61
-    m_ActionName: Menu/Escape[/Keyboard/escape]
+      m_Calls:
+      - m_Target: {fileID: 1197204636561459852}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnEscape
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ea4db155-1fec-4b34-9dc5-5d4266dd53bd
+    m_ActionName: Player/Escape[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1197204636561459852}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnEscape
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 61624bcf-2299-4ca6-af96-eccc60d6bfc9
+    m_ActionName: UI/Escape[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Touch
   m_DefaultActionMap: Player
@@ -1030,6 +1075,22 @@ PrefabInstance:
     - target: {fileID: 956677083630375296, guid: 75176f4262116e140af6c1fac189a774, type: 3}
       propertyPath: m_Bounds.m_Extent.y
       value: 0.5295098
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199095084166606352, guid: 75176f4262116e140af6c1fac189a774, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.1666183
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199095084166606352, guid: 75176f4262116e140af6c1fac189a774, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.06757164
+      objectReference: {fileID: 0}
+    - target: {fileID: 2056991234744776670, guid: 75176f4262116e140af6c1fac189a774, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.617401
+      objectReference: {fileID: 0}
+    - target: {fileID: 2056991234744776670, guid: 75176f4262116e140af6c1fac189a774, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.862879
       objectReference: {fileID: 0}
     - target: {fileID: 2192681073063667337, guid: 75176f4262116e140af6c1fac189a774, type: 3}
       propertyPath: m_Bounds.m_Center.x
@@ -1171,6 +1232,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.0072679603
       objectReference: {fileID: 0}
+    - target: {fileID: 4263638773647728483, guid: 75176f4262116e140af6c1fac189a774, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.8938065
+      objectReference: {fileID: 0}
+    - target: {fileID: 4263638773647728483, guid: 75176f4262116e140af6c1fac189a774, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.863258
+      objectReference: {fileID: 0}
     - target: {fileID: 4414561303977615306, guid: 75176f4262116e140af6c1fac189a774, type: 3}
       propertyPath: m_Bounds.m_Center.x
       value: 0.022717834
@@ -1294,6 +1363,14 @@ PrefabInstance:
     - target: {fileID: 6696017479406367497, guid: 75176f4262116e140af6c1fac189a774, type: 3}
       propertyPath: m_Bounds.m_Extent.y
       value: 0.50463796
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903470887647621557, guid: 75176f4262116e140af6c1fac189a774, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.1537704
+      objectReference: {fileID: 0}
+    - target: {fileID: 6903470887647621557, guid: 75176f4262116e140af6c1fac189a774, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.02711296
       objectReference: {fileID: 0}
     - target: {fileID: 7147891205328037145, guid: 75176f4262116e140af6c1fac189a774, type: 3}
       propertyPath: m_LocalRotation.w
