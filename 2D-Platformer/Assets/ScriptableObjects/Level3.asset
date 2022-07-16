@@ -40,7 +40,7 @@ MonoBehaviour:
   canWallJump: 1
   canJumpAfterWallJump: 0
   canWallRun: 1
-  canMultipleWallRun: 0
+  canMultipleWallRun: 1
   canWallSlide: 1
   canGlide: 1
   canGlideAfterWallContact: 0

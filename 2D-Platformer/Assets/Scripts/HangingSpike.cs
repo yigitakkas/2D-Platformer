@@ -10,6 +10,7 @@ public class HangingSpike : MonoBehaviour
     private bool playerDetected;
     private SpriteRenderer spriteRenderer;
     public Sprite newSprite;
+    public float raycastHeight = 10f;
 
     private void Awake()
     {
@@ -26,8 +27,8 @@ public class HangingSpike : MonoBehaviour
     {
         if (playerDetected)
             return;
-        playerHit = Physics2D.Raycast(transform.position, Vector2.down, 10f, playerLayer);
-        Debug.DrawRay(transform.position, Vector2.down * 10f, Color.red);
+        playerHit = Physics2D.Raycast(transform.position, Vector2.down, raycastHeight, playerLayer);
+        Debug.DrawRay(transform.position, Vector2.down * raycastHeight, Color.red);
         if(playerHit)
         {
             spriteRenderer.sprite = newSprite;
