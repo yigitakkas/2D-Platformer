@@ -43,7 +43,7 @@ MonoBehaviour:
   canMultipleWallRun: 1
   canWallSlide: 1
   canGlide: 1
-  canGlideAfterWallContact: 0
+  canGlideAfterWallContact: 1
   canPowerJump: 0
   canGroundDash: 0
   canAirDash: 0
