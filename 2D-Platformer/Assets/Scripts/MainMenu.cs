@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void PlayGame()
+    private void Awake()
     {
-        
     }
     public void QuitGame()
     {

@@ -430,10 +430,6 @@ public class CharacterController2D : MonoBehaviour
             starCountScreen.SetStars(scoreManager.score); 
             _rigidbody2D.bodyType = RigidbodyType2D.Static;
             gameObject.SetActive(false);
-            /*levelCompletedScreen.Setup(scoreManager.score);
-            starCountScreen.SetStars(scoreManager.score);
-            _rigidbody2D.bodyType = RigidbodyType2D.Static;
-            gameObject.SetActive(false);*/
         }
     }
 

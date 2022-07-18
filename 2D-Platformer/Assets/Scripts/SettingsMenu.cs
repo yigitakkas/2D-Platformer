@@ -94,8 +94,6 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.value = data.resolution;
         graphicsDropdown.value = data.graphics;
         windowModeDropdown.value = data.windowMode;
-        //volumeSlider.value = data.volume;
-
         graphicsDropdown.RefreshShownValue();
     }
 }

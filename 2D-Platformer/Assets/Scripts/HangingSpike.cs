@@ -11,6 +11,7 @@ public class HangingSpike : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public Sprite newSprite;
     public float raycastHeight = 10f;
+    public float fallSpeed = 3f;
 
     private void Awake()
     {
@@ -33,7 +34,7 @@ public class HangingSpike : MonoBehaviour
         {
             spriteRenderer.sprite = newSprite;
             playerDetected = true;
-            spikeBody.gravityScale = 3f;
+            spikeBody.gravityScale = fallSpeed;
             Invoke("DeactivateObject", 3f);
         }
     }

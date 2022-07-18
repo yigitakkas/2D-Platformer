@@ -22,7 +22,7 @@ MonoBehaviour:
   xWallJumpSpeed: 15
   yWallJumpSpeed: 15
   wallRunAmount: 8
-  wallSlideAmount: 0.1
+  wallSlideAmount: 0.2
   glideTime: 2
   glideDescentAmount: 2
   powerJumpSpeed: 35
