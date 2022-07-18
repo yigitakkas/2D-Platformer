@@ -10,19 +10,8 @@ public class AudioManager : MonoBehaviour
     public Sound[] sounds;
     public static AudioManager instance;
     [SerializeField] Slider volumeSlider;
-    //public GameObject levelCompleted;
-    //public GameObject gameOver;
-    // Start is called before the first frame update
     void Awake()
     {
-        /*if (instance == null)
-            instance = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-        DontDestroyOnLoad(gameObject);*/
         foreach(Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
