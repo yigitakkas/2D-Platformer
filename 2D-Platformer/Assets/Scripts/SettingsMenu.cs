@@ -20,16 +20,16 @@ public class SettingsMenu : MonoBehaviour
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
-        int currentResolutionIndex = 0;
+        //int currentResolutionIndex = 0;
 
         for(int i=0; i<resolutions.Length;i++)
         {
             string option = resolutions[i].width + " x " + resolutions[i].height + " @ " + resolutions[i].refreshRate + " Hz";
             options.Add(option);
-            if(resolutions[i].Equals(Screen.currentResolution))
+            /*if(resolutions[i].Equals(Screen.currentResolution))
             {
                 currentResolutionIndex = i;
-            }
+            }*/
         }
         resolutionDropdown.AddOptions(options);
         LoadAllSettings();

@@ -17,7 +17,6 @@ public class LevelManager : MonoBehaviour
         }
         for (int i = 0; i < levelsUnlocked; i++)
         {
-            Debug.Log(levelsUnlocked);
             buttons[i].interactable = true;
         }
     }
