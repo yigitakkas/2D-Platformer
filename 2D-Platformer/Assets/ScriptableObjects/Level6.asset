@@ -26,7 +26,7 @@ MonoBehaviour:
   glideTime: 2
   glideDescentAmount: 2
   powerJumpSpeed: 35
-  powerJumpWaitTime: 1
+  powerJumpWaitTime: 0.5
   dashSpeed: 40
   dashTime: 0.2
   dashCooldownTime: 1

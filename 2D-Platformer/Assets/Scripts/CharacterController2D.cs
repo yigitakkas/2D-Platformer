@@ -40,7 +40,7 @@ public class CharacterController2D : MonoBehaviour
 
     [Header("Air Effector Information")]
     [SerializeField] bool inAirEffector;
-    [SerializeField] AirEffectorType airEffectorType;
+    public AirEffectorType airEffectorType;
     [SerializeField] float airEffectorSpeed;
     [SerializeField] Vector2 airEffectorDirection;
 

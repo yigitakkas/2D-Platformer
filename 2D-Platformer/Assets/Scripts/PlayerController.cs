@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         //jumping
-        if (_jumpBufferCounter > 0f)
+        if (_jumpBufferCounter > 0f && _characterController2D.airEffectorType == AirEffectorType.None)
         {
             _startJump = false;
             _coyoteTimeCounter = 0;
@@ -479,7 +479,7 @@ public class PlayerController : MonoBehaviour
     {
         if(_startJump)
         {
-            _characterController2D.DeactivateAirEffector();
+            //_characterController2D.DeactivateAirEffector();
             Jump();
         }
         //process movement when on ladder
